@@ -1,7 +1,7 @@
-import ExampleComponent from './'
+import TwitchEmbed from './';
 
-describe('ExampleComponent', () => {
+describe('TwitchEmbed', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
-  })
-})
+    expect(TwitchEmbed).toBeTruthy();
+  });
+});

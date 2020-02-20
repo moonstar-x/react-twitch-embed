@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import TwitchEmbed from 'react-twitch-embed';
 
-import ExampleComponent from 'react-twitch-embed'
-
-export default class App extends Component {
-  render () {
+class App extends Component {
+  render() {
     return (
       <div>
-        <ExampleComponent text='Modern React component module' />
+        <TwitchEmbed text="hello" />
       </div>
-    )
+    );
   }
 }
+
+export default App;

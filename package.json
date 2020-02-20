@@ -21,6 +21,10 @@
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"
   },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": ["greencoast"]
+},
   "peerDependencies": {
     "prop-types": "^15.5.4",
     "react": "^15.0.0 || ^16.0.0",
@@ -36,12 +40,16 @@
     "babel-preset-stage-0": "^6.24.1",
     "cross-env": "^5.1.4",
     "eslint": "^5.0.1",
+    "eslint-config-greencoast": "^0.0.2",
     "eslint-config-standard": "^11.0.0",
     "eslint-config-standard-react": "^6.0.0",
-    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-flowtype": "^4.6.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.0",
-    "eslint-plugin-react": "^7.10.0",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.4.0",
     "eslint-plugin-standard": "^3.1.0",
     "gh-pages": "^1.2.0",
     "react": "^16.4.1",
