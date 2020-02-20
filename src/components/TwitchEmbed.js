@@ -51,7 +51,20 @@ class TwitchEmbed extends Component {
     this.embed.addEventListener(window.Twitch.Embed.AUTHENTICATE, this.props.onAuthenticate);
     this.embed.addEventListener(window.Twitch.Embed.VIDEO_PLAY, this.props.onVideoPlay);
     this.embed.addEventListener(window.Twitch.Embed.VIDEO_PAUSE, this.props.onVideoPause);
-    this.embed.addEventListener(window.Twitch.Embed.VIDEO_READY, this.props.onVideoReady);
+    this.embed.addEventListener(window.Twitch.Embed.VIDEO_READY, () => {
+      const { autoplay, muted } = this.props;
+      const player = this.embed.getPlayer();
+
+      if (muted) {
+        player.setVolume(0);
+      }
+
+      if (!autoplay) {
+        player.pause();
+      }
+
+      this.props.onVideoReady(player);
+    });
   }
 
   render() {
@@ -79,7 +92,9 @@ TwitchEmbed.propTypes = {
   onAuthenticate: PropTypes.func,
   onVideoPlay: PropTypes.func,
   onVideoPause: PropTypes.func,
-  onVideoReady: PropTypes.func
+  onVideoReady: PropTypes.func,
+  autoplay: PropTypes.bool,
+  muted: PropTypes.bool
 };
 
 TwitchEmbed.defaultProps = {
@@ -96,7 +111,9 @@ TwitchEmbed.defaultProps = {
   onAuthenticate: () => null,
   onVideoPlay: () => null,
   onVideoPause: () => null,
-  onVideoReady: () => null
+  onVideoReady: () => null,
+  autoplay: true,
+  muted: false
 };
 
 export default TwitchEmbed;

@@ -26,7 +26,7 @@ class App extends Component {
         <button onClick={() => this.setState({ channel: channels[Math.floor(Math.random() * channels.length)] })}>Change channel</button>
         {
           enabled &&
-            <TwitchEmbed channel={channel} onAuthenticate={logArguments} onVideoPlay={logArguments} onVideoReady={logArguments} onVideoPause={logArguments} />
+            <TwitchEmbed autoplay={false} channel={channel} onAuthenticate={logArguments} onVideoPlay={logArguments} onVideoReady={logArguments} onVideoPause={logArguments} />
         }
       </div>
     );
