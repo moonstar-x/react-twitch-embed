@@ -23,7 +23,7 @@ TwitchChat.propTypes = {
 };
 
 TwitchChat.defaultProps = {
-  id: 'chat-embed',
+  id: 'twitch-chat-embed',
   height: 500,
   width: 350
 };
