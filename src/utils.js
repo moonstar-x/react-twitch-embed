@@ -5,7 +5,7 @@ const getChatEmbedURL = (channel) => {
 };
 
 const getClipEmbedURL = (clip, autoplay, muted) => {
-  return `${TWITCH_CLIP_URL}/?clip=${clip}&autoplay=${autoplay}&muted=${muted}`;
+  return `${TWITCH_CLIP_URL}?clip=${clip}&autoplay=${autoplay}&muted=${muted}`;
 };
 
 export {
