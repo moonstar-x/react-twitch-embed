@@ -1,19 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getChatEmbedURL } from '../utils';
 
-const TwitchChat = ({ channel, height, id, width, ...props }) => {
-  return (
-    <iframe
-      title={`Twitch Chat - ${id}`}
-      id={id}
-      src={getChatEmbedURL(channel)}
-      height={height}
-      width={width}
-      {...props}
-    />
-  );
-};
+class TwitchChat extends Component {
+  componentDidMount() {
+    if (!this.props.channel) {
+      throw new Error('A channel prop must be supplied to TwitchChat!');
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!this.props.channel) {
+      throw new Error('A channel prop must be supplied to TwitchChat!');
+    }
+  }
+
+  render() {
+    const { channel, height, id, width, ...props } = this.props;
+
+    return (
+      <iframe
+        title={`Twitch Chat - ${id}`}
+        id={id}
+        src={getChatEmbedURL(channel)}
+        height={height}
+        width={width}
+        {...props}
+      />
+    );
+  }
+}
 
 TwitchChat.propTypes = {
   channel: PropTypes.string.isRequired,

@@ -4,6 +4,10 @@ import { TWITCH_EMBED_URL } from '../constants';
 
 class TwitchEmbed extends Component {
   componentDidMount() {
+    if (!this.props.channel) {
+      throw new Error('A channel prop must be supplied to TwitchEmbed!');
+    }
+
     if (window.Twitch && window.Twitch.Embed) {
       return this._createEmbed();
     }
