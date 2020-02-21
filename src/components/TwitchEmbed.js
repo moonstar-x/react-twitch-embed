@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import isRequiredIf from 'react-proptype-conditional-require';
 import { TWITCH_EMBED_URL } from '../constants';
 
 class TwitchEmbed extends Component {
@@ -20,6 +19,10 @@ class TwitchEmbed extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!this.props.channel) {
+      throw new Error('A channel prop must be supplied to TwitchEmbed!');
+    }
+
     if (
       prevProps.channel !== this.props.channel ||
       prevProps.width !== this.props.width ||
@@ -35,12 +38,10 @@ class TwitchEmbed extends Component {
     this.embed = new window.Twitch.Embed(this.props.id, {
       allowfullscreen: this.props.allowFullscreen,
       channel: this.props.channel,
-      collection: this.props.collection,
       'font-size': this.props.fontSize,
       height: this.props.height,
       layout: this.props.withChat ? 'video-with-chat' : 'video',
       theme: this.props.theme,
-      video: this.props.video,
       width: this.props.width
     });
 
@@ -76,18 +77,14 @@ class TwitchEmbed extends Component {
   }
 }
 
-TwitchEmbed.COLLECTION_VIDEO_REQUIRED_MESSAGE = 'A video prop must be provided when the collection prop is specified.';
-
 TwitchEmbed.propTypes = {
   id: PropTypes.string,
   allowFullscreen: PropTypes.bool,
-  channel: PropTypes.string,
-  collection: PropTypes.string,
+  channel: PropTypes.string.isRequired,
   fontSize: PropTypes.oneOf(['small', 'medium', 'large']),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   withChat: PropTypes.bool,
   theme: PropTypes.oneOf(['light', 'dark']),
-  video: isRequiredIf(PropTypes.string, (props) => !!props.collection, TwitchEmbed.COLLECTION_VIDEO_REQUIRED_MESSAGE),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onAuthenticate: PropTypes.func,
   onVideoPlay: PropTypes.func,
@@ -100,13 +97,10 @@ TwitchEmbed.propTypes = {
 TwitchEmbed.defaultProps = {
   id: 'twitch-embed',
   allowFullscreen: true,
-  channel: null,
-  collection: null,
   fontSize: 'small',
   height: 480,
   withChat: true,
   theme: 'light',
-  video: null,
   width: 940,
   onAuthenticate: () => null,
   onVideoPlay: () => null,

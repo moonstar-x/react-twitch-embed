@@ -13,12 +13,14 @@ class App extends Component {
 
     this.state = {
       enabled: true,
-      channel: 'loltyler1'
+      channel: 'moonstar_x',
+      video: '285064366',
+      collection: 'YfGvvNZI9RWlEQ'
     };
   }
 
   render() {
-    const { channel, enabled } = this.state;
+    const { channel, enabled, video, collection } = this.state;
 
     return (
       <div>
@@ -26,8 +28,13 @@ class App extends Component {
         <button onClick={() => this.setState({ channel: channels[Math.floor(Math.random() * channels.length)] })}>Change channel</button>
         {
           enabled &&
-            <TwitchEmbed autoplay={false} channel={channel} onAuthenticate={logArguments} onVideoPlay={logArguments} onVideoReady={logArguments} onVideoPause={logArguments} />
+            <TwitchEmbed video={video} collection={collection} channel={channel} withChat={false} />
         }
+        <iframe src="https://player.twitch.tv/?autoplay=false&collection=YfGvvNZI9RWlEQ" frameBorder="0"
+                allowFullScreen="true" scrolling="no" height="378" width="620"></iframe>
+        <a href="https://www.twitch.tv/collections/YfGvvNZI9RWlEQ?tt_content=text_link&tt_medium=vod_embed"
+           >Watch
+          Test collection from moonstar_x on www.twitch.tv</a>
       </div>
     );
   }
