@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TwitchEmbed from 'react-twitch-embed';
+import TwitchEmbed, { TwitchChat } from 'react-twitch-embed';
 
 const channels = ['loltyler1', 'moonstar_x', 'method', 'Rainbow6'];
 
@@ -41,6 +41,7 @@ class App extends Component {
           enabled &&
             <TwitchEmbed video={video} collection={collection} channel={channel} withChat={false} />
         }
+        <TwitchChat channel={channel} style={{ padding: 50, background: 'black' }} />
       </div>
     );
   }
