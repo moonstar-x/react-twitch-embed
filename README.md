@@ -77,7 +77,7 @@ const Stream = () => {
         onVideoPause={() => console.log(':(')}
       />
       <TwitchChat className="chat-embed-boder" channel="moonstar_x" />
-      <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime' />
+      <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" />
     </div>
   );
 }
