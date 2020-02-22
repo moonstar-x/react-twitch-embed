@@ -108,6 +108,9 @@ check out the [Twitch Video & Clips Documentation](https://dev.twitch.tv/docs/em
 > If you need multiple embeds of the same type on the same page, you need to supply an `id` prop to each one, otherwise the embeds
 > will mount on the same node, making them stick to each other.
 
+* **Is there a demo?**
+> Not yet, once I get enough time, I'll make a demo page.
+
 ## Example usage
 
 ```jsx
