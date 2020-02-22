@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TWITCH_EMBED_URL } from '../constants';
+import { TWITCH_EMBED_URL, MEDIA_DEFAULT_WIDTH, MEDIA_DEFAULT_HEIGHT } from '../constants';
 
 class TwitchEmbed extends Component {
   componentDidMount() {
-    if (!this.props.channel) {
-      throw new Error('A channel prop must be supplied to TwitchEmbed!');
-    }
+    this._validateProps();
 
     if (window.Twitch && window.Twitch.Embed) {
       return this._createEmbed();
@@ -23,18 +21,36 @@ class TwitchEmbed extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!this.props.channel) {
-      throw new Error('A channel prop must be supplied to TwitchEmbed!');
+    this._validateProps();
+
+    if (prevProps.withChat) {
+      this.embed = null;
+      this.player = null;
+      document.getElementById(prevProps.id).innerHTML = '';
+      return this._createEmbed();
     }
 
-    if (
-      prevProps.channel !== this.props.channel ||
-      prevProps.width !== this.props.width ||
-      prevProps.height !== this.props.height
-    ) {
+    const updatedPropsExceptChannel = Object.keys(prevProps).reduce((updated, prop) => {
+      if (prop === 'channel') {
+        return updated;
+      }
+
+      if (prevProps[prop] !== this.props[prop]) {
+        updated.push(prop);
+      }
+
+      return updated;
+    }, []);
+
+    if (updatedPropsExceptChannel.length > 0) {
       this.embed = null;
+      this.player = null;
       document.getElementById(prevProps.id).innerHTML = '';
-      this._createEmbed();
+      return this._createEmbed();
+    }
+
+    if (prevProps.channel !== this.props.channel) {
+      this.player.setChannel(this.props.channel);
     }
   }
 
@@ -58,18 +74,24 @@ class TwitchEmbed extends Component {
     this.embed.addEventListener(window.Twitch.Embed.VIDEO_PAUSE, this.props.onVideoPause);
     this.embed.addEventListener(window.Twitch.Embed.VIDEO_READY, () => {
       const { autoplay, muted } = this.props;
-      const player = this.embed.getPlayer();
+      this.player = this.embed.getPlayer();
 
       if (muted) {
-        player.setVolume(0);
+        this.player.setVolume(0);
       }
 
       if (!autoplay) {
-        player.pause();
+        this.player.pause();
       }
 
-      this.props.onVideoReady(player);
+      this.props.onVideoReady(this.player);
     });
+  }
+
+  _validateProps() {
+    if (!this.props.channel) {
+      throw new Error('A channel prop must be supplied to TwitchEmbed!');
+    }
   }
 
   render() {
@@ -102,10 +124,10 @@ TwitchEmbed.defaultProps = {
   id: 'twitch-embed',
   allowFullscreen: true,
   fontSize: 'small',
-  height: 480,
+  height: MEDIA_DEFAULT_HEIGHT,
   withChat: true,
   theme: 'light',
-  width: 940,
+  width: MEDIA_DEFAULT_WIDTH,
   onAuthenticate: () => null,
   onVideoPlay: () => null,
   onVideoPause: () => null,
