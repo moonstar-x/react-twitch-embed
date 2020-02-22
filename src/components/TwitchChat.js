@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { CHAT_DEFAULT_HEIGHT, CHAT_DEFAULT_WIDTH } from '../constants';
 import { getChatEmbedURL } from '../utils';
 
 class TwitchChat extends Component {
   componentDidMount() {
-    if (!this.props.channel) {
-      throw new Error('A channel prop must be supplied to TwitchChat!');
-    }
+    this._validateProps();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    this._validateProps();
+  }
+
+  _validateProps() {
     if (!this.props.channel) {
       throw new Error('A channel prop must be supplied to TwitchChat!');
     }
@@ -40,8 +43,8 @@ TwitchChat.propTypes = {
 
 TwitchChat.defaultProps = {
   id: 'twitch-chat-embed',
-  height: 500,
-  width: 350
+  height: CHAT_DEFAULT_HEIGHT,
+  width: CHAT_DEFAULT_WIDTH
 };
 
 export default TwitchChat;

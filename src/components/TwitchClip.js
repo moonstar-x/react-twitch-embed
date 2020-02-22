@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { MEDIA_DEFAULT_HEIGHT, MEDIA_DEFAULT_WIDTH } from '../constants';
 import { getClipEmbedURL } from '../utils';
 
 class TwitchClip extends Component {
   componentDidMount() {
-    if (!this.props.clip) {
-      throw new Error('A clip prop must be supplied to TwitchClip!');
-    }
+    this._validateProps();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    this._validateProps();
+  }
+
+  _validateProps() {
     if (!this.props.clip) {
       throw new Error('A clip prop must be supplied to TwitchClip!');
     }
@@ -46,8 +49,8 @@ TwitchClip.defaultProps = {
   id: 'twitch-clip-embed',
   autoplay: true,
   muted: false,
-  height: 480,
-  width: 940,
+  height: MEDIA_DEFAULT_HEIGHT,
+  width: MEDIA_DEFAULT_WIDTH,
   allowFullscreen: true
 };
 
