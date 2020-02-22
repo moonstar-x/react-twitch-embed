@@ -92,9 +92,9 @@ check out the [Twitch Video & Clips Documentation](https://dev.twitch.tv/docs/em
 * **Which should I choose, `TwitchEmbed` or `TwitchPlayer`?**
 > They're both very similar, however, if you need to embed a stream with its chat and don't plan on controlling the player object
 > from outside, then `TwitchEmbed` should be fine. The key difference is that `TwitchPlayer` not only accepts VODs and collections,
-> it also has access to a more complete player object. Also, switching between channels is more fluid using `TwitchPlayer` because 
-> it is directly set from the player object, `TwitchEmbed` does not allow this because only the player will update and not the chat.
-> Updating the channel in `PlayerEmbed` will re-create the embed.
+> it also has access to a more complete player object. Also, switching channels in `TwitchPlayer` is more fluid because it uses the
+> player API to switch the channel. This also happens on `TwitchEmbed` but only when `withChat` is set to `false`. If `withChat` is
+> set to `true` o `TwitchEmbed` and the `channel` prop is updated, it will recreate the embed.
 
 * **Why is there `TwitchClip` and `TwitchPlayer`?**
 > Twitch handles clips and VODs differently, this is also true for their embeds. `TwitchClip` will only work for clips whereas
