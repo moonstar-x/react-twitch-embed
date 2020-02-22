@@ -75,12 +75,12 @@ class App extends Component {
         <button onClick={this.handleVideoChange}>Change video</button>
         <button onClick={this.handleAllChange}>Change all</button>
         <button onClick={this.handleChangeChannelWidth}>Change channel and width</button>
-        {/*{*/}
-        {/*  enabled &&*/}
-        {/*  <TwitchEmbed video={video} collection={collection} channel={channel} withChat={false} />*/}
-        {/*}*/}
-        {/*<TwitchChat channel={channel} style={{ padding: 50, background: 'black' }} />*/}
-        {/*<TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" />*/}
+        {
+          enabled &&
+          <TwitchEmbed video={video} collection={collection} channel={channel} withChat={false} />
+        }
+        <TwitchChat channel={channel} style={{ padding: 50, background: 'black' }} />
+        <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" />
         <TwitchPlayer width={width} collection={collection} video={video} />
       </div>
     );
