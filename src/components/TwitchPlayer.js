@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TWITCH_PLAYER_URL } from '../constants';
+import { TWITCH_PLAYER_URL, MEDIA_DEFAULT_WIDTH, MEDIA_DEFAULT_HEIGHT } from '../constants';
 
 const mediaProps = ['channel', 'collection', 'video'];
 
@@ -139,8 +139,8 @@ TwitchPlayer.defaultProps = {
   channel: null,
   collection: null,
   video: null,
-  height: 480,
-  width: 940,
+  height: MEDIA_DEFAULT_HEIGHT,
+  width: MEDIA_DEFAULT_WIDTH,
   playsInline: true,
   autoplay: true,
   muted: false,
