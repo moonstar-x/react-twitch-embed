@@ -11,10 +11,11 @@ class App extends Component {
 
     this.state = {
       enabled: true,
-      channel: channels[1],
+      channel: channels[2],
       video: videos[0],
       collection: collections[1],
-      width: 900
+      width: 900,
+      chat: false
     };
 
     this.handleEnable = this.handleEnable.bind(this);
@@ -23,6 +24,7 @@ class App extends Component {
     this.handleVideoChange = this.handleVideoChange.bind(this);
     this.handleAllChange = this.handleAllChange.bind(this);
     this.handleChangeChannelWidth = this.handleChangeChannelWidth.bind(this);
+    this.handleChangeChat = this.handleChangeChat.bind(this);
   }
 
   handleEnable() {
@@ -64,8 +66,14 @@ class App extends Component {
     });
   }
 
+  handleChangeChat() {
+    this.setState({
+      chat: !this.state.chat
+    });
+  }
+
   render() {
-    const { channel, enabled, video, collection, width } = this.state;
+    const { channel, enabled, video, collection, width, chat } = this.state;
 
     return (
       <div>
@@ -75,9 +83,10 @@ class App extends Component {
         <button onClick={this.handleVideoChange}>Change video</button>
         <button onClick={this.handleAllChange}>Change all</button>
         <button onClick={this.handleChangeChannelWidth}>Change channel and width</button>
+        <button onClick={this.handleChangeChat}>Toggle chat</button>
         {
           enabled &&
-          <TwitchEmbed video={video} collection={collection} channel={channel} withChat={false} />
+          <TwitchEmbed channel={channel} autoplay={false} muted fontSize="large" theme="dark" withChat={chat} />
         }
         <TwitchChat channel={channel} style={{ padding: 50, background: 'black' }} />
         <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" />
