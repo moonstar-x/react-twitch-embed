@@ -37,8 +37,8 @@ class TwitchChat extends Component {
 TwitchChat.propTypes = {
   channel: PropTypes.string.isRequired,
   id: PropTypes.string,
-  height: PropTypes.number,
-  width: PropTypes.number
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 TwitchChat.defaultProps = {

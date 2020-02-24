@@ -2,7 +2,54 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TWITCH_EMBED_URL, MEDIA_DEFAULT_WIDTH, MEDIA_DEFAULT_HEIGHT } from '../constants';
 
+const scriptElement = document.createElement('script');
+scriptElement.setAttribute('type', 'text/javascript');
+scriptElement.setAttribute('src', TWITCH_EMBED_URL);
+let scriptAdded = false;
+
+const propTypes = {
+  id: PropTypes.string,
+  allowFullscreen: PropTypes.bool,
+  channel: PropTypes.string.isRequired,
+  fontSize: PropTypes.oneOf(['small', 'medium', 'large']),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  withChat: PropTypes.bool,
+  theme: PropTypes.oneOf(['light', 'dark']),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onAuthenticate: PropTypes.func,
+  onVideoPlay: PropTypes.func,
+  onVideoPause: PropTypes.func,
+  onVideoReady: PropTypes.func,
+  autoplay: PropTypes.bool,
+  muted: PropTypes.bool
+};
+
+const defaultProps = {
+  id: 'twitch-embed',
+  allowFullscreen: true,
+  fontSize: 'small',
+  height: MEDIA_DEFAULT_HEIGHT,
+  withChat: true,
+  theme: 'light',
+  width: MEDIA_DEFAULT_WIDTH,
+  onAuthenticate: () => null,
+  onVideoPlay: () => null,
+  onVideoPause: () => null,
+  onVideoReady: () => null,
+  autoplay: true,
+  muted: false
+};
+
 class TwitchEmbed extends Component {
+  constructor(props) {
+    super(props);
+
+    if (!scriptAdded) {
+      document.body.appendChild(scriptElement);
+      scriptAdded = true;
+    }
+  }
+
   componentDidMount() {
     this._validateProps();
 
@@ -10,14 +57,9 @@ class TwitchEmbed extends Component {
       return this._createEmbed();
     }
 
-    const scriptElement = document.createElement('script');
-    scriptElement.setAttribute('src', TWITCH_EMBED_URL);
-
     scriptElement.addEventListener('load', () => {
       this._createEmbed();
     });
-
-    document.body.appendChild(scriptElement);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -59,10 +101,10 @@ class TwitchEmbed extends Component {
       allowfullscreen: this.props.allowFullscreen,
       channel: this.props.channel,
       'font-size': this.props.fontSize,
-      height: this.props.height,
+      height: '100%',
       layout: this.props.withChat ? 'video-with-chat' : 'video',
       theme: this.props.theme,
-      width: this.props.width
+      width: '100%'
     });
 
     this._addEventListeners();
@@ -95,45 +137,22 @@ class TwitchEmbed extends Component {
   }
 
   render() {
-    const { id, width, height } = this.props;
+    const unknownProps = Object.keys(this.props).reduce((unknown, prop) => {
+      if (propTypes.hasOwnProperty(prop)) {
+        return unknown;
+      }
+
+      unknown[prop] = this.props[prop];
+      return unknown;
+    }, {});
 
     return (
-      <div style={{ width, height }} id={id} />
+      <div style={{ width: this.props.width, height: this.props.height }} id={this.props.id} {...unknownProps} />
     );
   }
 }
 
-TwitchEmbed.propTypes = {
-  id: PropTypes.string,
-  allowFullscreen: PropTypes.bool,
-  channel: PropTypes.string.isRequired,
-  fontSize: PropTypes.oneOf(['small', 'medium', 'large']),
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  withChat: PropTypes.bool,
-  theme: PropTypes.oneOf(['light', 'dark']),
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onAuthenticate: PropTypes.func,
-  onVideoPlay: PropTypes.func,
-  onVideoPause: PropTypes.func,
-  onVideoReady: PropTypes.func,
-  autoplay: PropTypes.bool,
-  muted: PropTypes.bool
-};
-
-TwitchEmbed.defaultProps = {
-  id: 'twitch-embed',
-  allowFullscreen: true,
-  fontSize: 'small',
-  height: MEDIA_DEFAULT_HEIGHT,
-  withChat: true,
-  theme: 'light',
-  width: MEDIA_DEFAULT_WIDTH,
-  onAuthenticate: () => null,
-  onVideoPlay: () => null,
-  onVideoPause: () => null,
-  onVideoReady: () => null,
-  autoplay: true,
-  muted: false
-};
+TwitchEmbed.propTypes = propTypes;
+TwitchEmbed.defaultProps = defaultProps;
 
 export default TwitchEmbed;

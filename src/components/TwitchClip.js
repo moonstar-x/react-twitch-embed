@@ -40,8 +40,8 @@ TwitchClip.propTypes = {
   id: PropTypes.string,
   autoplay: PropTypes.bool,
   muted: PropTypes.bool,
-  height: PropTypes.number,
-  width: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   allowFullscreen: PropTypes.bool
 };
 

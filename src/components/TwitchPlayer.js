@@ -4,7 +4,65 @@ import { TWITCH_PLAYER_URL, MEDIA_DEFAULT_WIDTH, MEDIA_DEFAULT_HEIGHT } from '..
 
 const mediaProps = ['channel', 'collection', 'video'];
 
+const scriptElement = document.createElement('script');
+scriptElement.setAttribute('type', 'text/javascript');
+scriptElement.setAttribute('src', TWITCH_PLAYER_URL);
+let scriptAdded = false;
+
+const propTypes = {
+  id: PropTypes.string,
+  channel: PropTypes.string,
+  collection: PropTypes.string,
+  video: PropTypes.string,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  playsInline: PropTypes.bool,
+  autoplay: PropTypes.bool,
+  muted: PropTypes.bool,
+  allowFullscreen: PropTypes.bool,
+  time: PropTypes.string,
+  onEnded: PropTypes.func,
+  onPause: PropTypes.func,
+  onPlay: PropTypes.func,
+  onPlaybackBlocked: PropTypes.func,
+  onPlaying: PropTypes.func,
+  onOffline: PropTypes.func,
+  onOnline: PropTypes.func,
+  onReady: PropTypes.func
+};
+
+const defaultProps = {
+  id: 'twitch-player-embed',
+  channel: null,
+  collection: null,
+  video: null,
+  height: MEDIA_DEFAULT_HEIGHT,
+  width: MEDIA_DEFAULT_WIDTH,
+  playsInline: true,
+  autoplay: true,
+  muted: false,
+  allowFullscreen: true,
+  time: '0h0m0s',
+  onEnded: () => null,
+  onPause: () => null,
+  onPlay: () => null,
+  onPlaybackBlocked: () => null,
+  onPlaying: () => null,
+  onOffline: () => null,
+  onOnline: () => null,
+  onReady: () => null
+};
+
 class TwitchPlayer extends Component {
+  constructor(props) {
+    super(props);
+
+    if (!scriptAdded) {
+      document.body.appendChild(scriptElement);
+      scriptAdded = true;
+    }
+  }
+
   componentDidMount() {
     this._validateProps();
 
@@ -12,14 +70,9 @@ class TwitchPlayer extends Component {
       return this._createPlayer();
     }
 
-    const scriptElement = document.createElement('script');
-    scriptElement.setAttribute('src', TWITCH_PLAYER_URL);
-
     scriptElement.addEventListener('load', () => {
       this._createPlayer();
     });
-
-    document.body.appendChild(scriptElement);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -57,8 +110,8 @@ class TwitchPlayer extends Component {
 
   _createPlayer() {
     const options = {
-      height: this.props.height,
-      width: this.props.width,
+      height: '100%',
+      width: '100%',
       playsinline: this.props.playsInline,
       allowfullscreen: this.props.allowFullscreen,
       autoplay: this.props.autoplay,
@@ -104,56 +157,22 @@ class TwitchPlayer extends Component {
   }
 
   render() {
-    const { id, width, height } = this.props;
+    const unknownProps = Object.keys(this.props).reduce((unknown, prop) => {
+      if (propTypes.hasOwnProperty(prop)) {
+        return unknown;
+      }
+
+      unknown[prop] = this.props[prop];
+      return unknown;
+    }, {});
 
     return (
-      <div id={id} style={{ width, height }} />
+      <div id={this.props.id} style={{ width: this.props.width, height: this.props.height }} {...unknownProps} />
     );
   }
 }
 
-TwitchPlayer.propTypes = {
-  id: PropTypes.string,
-  channel: PropTypes.string,
-  collection: PropTypes.string,
-  video: PropTypes.string,
-  height: PropTypes.number,
-  width: PropTypes.number,
-  playsInline: PropTypes.bool,
-  autoplay: PropTypes.bool,
-  muted: PropTypes.bool,
-  allowFullscreen: PropTypes.bool,
-  time: PropTypes.string,
-  onEnded: PropTypes.func,
-  onPause: PropTypes.func,
-  onPlay: PropTypes.func,
-  onPlaybackBlocked: PropTypes.func,
-  onPlaying: PropTypes.func,
-  onOffline: PropTypes.func,
-  onOnline: PropTypes.func,
-  onReady: PropTypes.func
-};
-
-TwitchPlayer.defaultProps = {
-  id: 'twitch-player-embed',
-  channel: null,
-  collection: null,
-  video: null,
-  height: MEDIA_DEFAULT_HEIGHT,
-  width: MEDIA_DEFAULT_WIDTH,
-  playsInline: true,
-  autoplay: true,
-  muted: false,
-  allowFullscreen: true,
-  time: '0h0m0s',
-  onEnded: () => null,
-  onPause: () => null,
-  onPlay: () => null,
-  onPlaybackBlocked: () => null,
-  onPlaying: () => null,
-  onOffline: () => null,
-  onOnline: () => null,
-  onReady: () => null
-};
+TwitchPlayer.propTypes = propTypes;
+TwitchPlayer.defaultProps = defaultProps;
 
 export default TwitchPlayer;
