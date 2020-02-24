@@ -96,7 +96,7 @@ class App extends Component {
         {/*    <TwitchPlayer key={channel} id={channel} channel={channel} />*/}
         {/*  )*/}
         {/*}*/}
-        <TwitchChat style={{ width: '100vw', height: '100vh'}} channel="method" />
+        <TwitchClip width="100%" height="99vh" clip="WealthyBumblingKimchiItsBoshyTime" />
       </div>
     );
   }
