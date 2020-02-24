@@ -77,20 +77,25 @@ class App extends Component {
 
     return (
       <div>
-        <button onClick={this.handleEnable}>Enable/Disable</button>
-        <button onClick={this.handleChangeChannel}>Change channel</button>
-        <button onClick={this.handleCollectionChange}>Change collection</button>
-        <button onClick={this.handleVideoChange}>Change video</button>
-        <button onClick={this.handleAllChange}>Change all</button>
-        <button onClick={this.handleChangeChannelWidth}>Change channel and width</button>
-        <button onClick={this.handleChangeChat}>Toggle chat</button>
+        {/*<button onClick={this.handleEnable}>Enable/Disable</button>*/}
+        {/*<button onClick={this.handleChangeChannel}>Change channel</button>*/}
+        {/*<button onClick={this.handleCollectionChange}>Change collection</button>*/}
+        {/*<button onClick={this.handleVideoChange}>Change video</button>*/}
+        {/*<button onClick={this.handleAllChange}>Change all</button>*/}
+        {/*<button onClick={this.handleChangeChannelWidth}>Change channel and width</button>*/}
+        {/*<button onClick={this.handleChangeChat}>Toggle chat</button>*/}
+        {/*{*/}
+        {/*  enabled &&*/}
+        {/*  <TwitchEmbed channel={channel} autoplay={false} muted fontSize="large" theme="dark" withChat={chat} />*/}
+        {/*}*/}
+        {/*<TwitchChat channel={channel} style={{ padding: 50, background: 'black' }} />*/}
+        {/*<TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" />*/}
+        {/*<TwitchPlayer width={width} collection={collection} video={video} />*/}
         {
-          enabled &&
-          <TwitchEmbed channel={channel} autoplay={false} muted fontSize="large" theme="dark" withChat={chat} />
+          channels.map((channel) =>
+            <TwitchPlayer key={channel} id={channel} channel={channel} />
+          )
         }
-        <TwitchChat channel={channel} style={{ padding: 50, background: 'black' }} />
-        <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" />
-        <TwitchPlayer width={width} collection={collection} video={video} />
       </div>
     );
   }

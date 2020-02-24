@@ -4,7 +4,21 @@ import { TWITCH_PLAYER_URL, MEDIA_DEFAULT_WIDTH, MEDIA_DEFAULT_HEIGHT } from '..
 
 const mediaProps = ['channel', 'collection', 'video'];
 
+const scriptElement = document.createElement('script');
+scriptElement.setAttribute('type', 'text/javascript');
+scriptElement.setAttribute('src', TWITCH_PLAYER_URL);
+let scriptAdded = false;
+
 class TwitchPlayer extends Component {
+  constructor(props) {
+    super(props);
+
+    if (!scriptAdded) {
+      document.body.appendChild(scriptElement);
+      scriptAdded = true;
+    }
+  }
+
   componentDidMount() {
     this._validateProps();
 
@@ -12,14 +26,9 @@ class TwitchPlayer extends Component {
       return this._createPlayer();
     }
 
-    const scriptElement = document.createElement('script');
-    scriptElement.setAttribute('src', TWITCH_PLAYER_URL);
-
     scriptElement.addEventListener('load', () => {
       this._createPlayer();
     });
-
-    document.body.appendChild(scriptElement);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
