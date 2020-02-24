@@ -91,12 +91,11 @@ class App extends Component {
         {/*<TwitchChat channel={channel} style={{ padding: 50, background: 'black' }} />*/}
         {/*<TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" />*/}
         {/*<TwitchPlayer width={width} collection={collection} video={video} />*/}
-        {/*{*/}
-        {/*  channels.map((channel) =>*/}
-        {/*    <TwitchPlayer key={channel} id={channel} channel={channel} />*/}
-        {/*  )*/}
-        {/*}*/}
-        <TwitchClip width="100%" height="99vh" clip="WealthyBumblingKimchiItsBoshyTime" />
+        {
+          channels.map((channel) =>
+            <TwitchEmbed className="twitch-embed" width="50%" key={channel} id={channel} channel={channel} />
+          )
+        }
       </div>
     );
   }
