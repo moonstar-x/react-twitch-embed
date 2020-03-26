@@ -21,6 +21,7 @@ const propTypes = {
   muted: PropTypes.bool,
   allowFullscreen: PropTypes.bool,
   time: PropTypes.string,
+  hideControls: PropTypes.bool,
   onEnded: PropTypes.func,
   onPause: PropTypes.func,
   onPlay: PropTypes.func,
@@ -43,6 +44,7 @@ const defaultProps = {
   muted: false,
   allowFullscreen: true,
   time: '0h0m0s',
+  hideControls: false,
   onEnded: () => null,
   onPause: () => null,
   onPlay: () => null,
@@ -116,7 +118,8 @@ class TwitchPlayer extends Component {
       allowfullscreen: this.props.allowFullscreen,
       autoplay: this.props.autoplay,
       muted: this.props.muted,
-      time: this.props.time
+      time: this.props.time,
+      controls: !this.props.hideControls
     };
 
     if (this.props.channel) {
