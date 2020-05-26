@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { TwitchChat } from 'react-twitch-embed';
+import { TwitchEmbed } from 'react-twitch-embed';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <TwitchChat channel="moonstar_x" theme="dark" />
+        <TwitchEmbed channel="moonstar_x" />
       </div>
     );
   }

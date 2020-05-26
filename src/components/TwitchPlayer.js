@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { TWITCH_PLAYER_URL, MEDIA_DEFAULT_WIDTH, MEDIA_DEFAULT_HEIGHT } from '../constants';
 
 const mediaProps = ['channel', 'collection', 'video'];
+let scriptElement = null;
 
-const scriptElement = document.createElement('script');
-scriptElement.setAttribute('type', 'text/javascript');
-scriptElement.setAttribute('src', TWITCH_PLAYER_URL);
-let scriptAdded = false;
+const loadScript = () => {
+  scriptElement = document.createElement('script');
+  scriptElement.setAttribute('type', 'text/javascript');
+  scriptElement.setAttribute('src', TWITCH_PLAYER_URL);
+  document.body.appendChild(scriptElement);
+};
 
 const propTypes = {
   id: PropTypes.string,
@@ -56,20 +59,15 @@ const defaultProps = {
 };
 
 class TwitchPlayer extends Component {
-  constructor(props) {
-    super(props);
-
-    if (!scriptAdded) {
-      document.body.appendChild(scriptElement);
-      scriptAdded = true;
-    }
-  }
-
   componentDidMount() {
     this._validateProps();
 
     if (window.Twitch && window.Twitch.Player) {
       return this._createPlayer();
+    }
+
+    if (!scriptElement) {
+      loadScript();
     }
 
     scriptElement.addEventListener('load', () => {
