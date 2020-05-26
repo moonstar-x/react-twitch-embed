@@ -19,13 +19,13 @@ class TwitchChat extends Component {
   }
 
   render() {
-    const { channel, height, id, width, ...props } = this.props;
+    const { channel, height, id, width, theme, ...props } = this.props;
 
     return (
       <iframe
         title={`Twitch Chat - ${id}`}
         id={id}
-        src={getChatEmbedURL(channel)}
+        src={getChatEmbedURL(channel, theme)}
         height={height}
         width={width}
         {...props}
@@ -38,13 +38,15 @@ TwitchChat.propTypes = {
   channel: PropTypes.string.isRequired,
   id: PropTypes.string,
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  theme: PropTypes.oneOf(['light', 'dark'])
 };
 
 TwitchChat.defaultProps = {
   id: 'twitch-chat-embed',
   height: CHAT_DEFAULT_HEIGHT,
-  width: CHAT_DEFAULT_WIDTH
+  width: CHAT_DEFAULT_WIDTH,
+  theme: 'light'
 };
 
 export default TwitchChat;
