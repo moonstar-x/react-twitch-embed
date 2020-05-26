@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TWITCH_EMBED_URL, MEDIA_DEFAULT_WIDTH, MEDIA_DEFAULT_HEIGHT } from '../constants';
 
-const scriptElement = document.createElement('script');
-scriptElement.setAttribute('type', 'text/javascript');
-scriptElement.setAttribute('src', TWITCH_EMBED_URL);
-let scriptAdded = false;
+let scriptElement = null;
+
+const loadScript = () => {
+  scriptElement = document.createElement('script');
+  scriptElement.setAttribute('type', 'text/javascript');
+  scriptElement.setAttribute('src', TWITCH_EMBED_URL);
+  document.body.appendChild(scriptElement);
+};
 
 const propTypes = {
   id: PropTypes.string,
@@ -41,20 +45,15 @@ const defaultProps = {
 };
 
 class TwitchEmbed extends Component {
-  constructor(props) {
-    super(props);
-
-    if (!scriptAdded) {
-      document.body.appendChild(scriptElement);
-      scriptAdded = true;
-    }
-  }
-
   componentDidMount() {
     this._validateProps();
 
     if (window.Twitch && window.Twitch.Embed) {
       return this._createEmbed();
+    }
+
+    if (!scriptElement) {
+      loadScript();
     }
 
     scriptElement.addEventListener('load', () => {
