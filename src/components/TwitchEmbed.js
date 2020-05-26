@@ -25,7 +25,8 @@ const propTypes = {
   onVideoPause: PropTypes.func,
   onVideoReady: PropTypes.func,
   autoplay: PropTypes.bool,
-  muted: PropTypes.bool
+  muted: PropTypes.bool,
+  parent: PropTypes.arrayOf(PropTypes.string)
 };
 
 const defaultProps = {
@@ -41,7 +42,8 @@ const defaultProps = {
   onVideoPause: () => null,
   onVideoReady: () => null,
   autoplay: true,
-  muted: false
+  muted: false,
+  parent: []
 };
 
 class TwitchEmbed extends Component {
@@ -103,7 +105,8 @@ class TwitchEmbed extends Component {
       height: '100%',
       layout: this.props.withChat ? 'video-with-chat' : 'video',
       theme: this.props.theme,
-      width: '100%'
+      width: '100%',
+      parent: this.props.parent
     });
 
     this._addEventListeners();

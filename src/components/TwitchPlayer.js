@@ -32,7 +32,8 @@ const propTypes = {
   onPlaying: PropTypes.func,
   onOffline: PropTypes.func,
   onOnline: PropTypes.func,
-  onReady: PropTypes.func
+  onReady: PropTypes.func,
+  parent: PropTypes.arrayOf(PropTypes.string)
 };
 
 const defaultProps = {
@@ -55,7 +56,8 @@ const defaultProps = {
   onPlaying: () => null,
   onOffline: () => null,
   onOnline: () => null,
-  onReady: () => null
+  onReady: () => null,
+  parent: []
 };
 
 class TwitchPlayer extends Component {
@@ -117,7 +119,8 @@ class TwitchPlayer extends Component {
       autoplay: this.props.autoplay,
       muted: this.props.muted,
       time: this.props.time,
-      controls: !this.props.hideControls
+      controls: !this.props.hideControls,
+      parent: this.props.parent
     };
 
     if (this.props.channel) {
