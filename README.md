@@ -47,6 +47,7 @@ check out the [Twitch Video & Clips Documentation](https://dev.twitch.tv/docs/em
 * `id` **\<String\>**: ID of the `iframe` node where the chat embed is mounted. Specify this if you have multiple chat embeds on the same page. (Default: `twitch-chat-embed`)
 * `height` **\<Number | String\>**: Chat embed height in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `500`)
 * `width` **\<Number | String\>**: Chat embed width in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `350`)
+* `theme` **\<Enum\>**: Theme of the chat emebed. Available values: `light` and `dark`. (Default: `light`)
 * `...props`: The rest of the props are supplied to chat embed `iframe` node.
 
 ### TwitchClip
@@ -132,7 +133,7 @@ const Stream = () => {
         muted
         onVideoPause={() => console.log(':(')}
       />
-      <TwitchChat className="chat-embed-boder" channel="moonstar_x" />
+      <TwitchChat className="chat-embed-boder" channel="moonstar_x" theme="dark" />
       <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" />
       <TwitchPlayer video="333014765" />
     </div>
