@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MEDIA_DEFAULT_HEIGHT, MEDIA_DEFAULT_WIDTH, TWITCH_CLIP_URL } from '../constants';
+import { parseParentQuery } from '../utils';
 
-const getClipEmbedURL = (clip, autoplay, muted) => {
-  return `${TWITCH_CLIP_URL}?clip=${clip}&autoplay=${autoplay}&muted=${muted}`;
+const getClipEmbedURL = (clip, autoplay, muted, parent, migration) => {
+  return `${TWITCH_CLIP_URL}?clip=${clip}&autoplay=${autoplay}&muted=${muted}&migration=${migration.toString()}${parseParentQuery(parent)}`;
 };
 
 class TwitchClip extends Component {
@@ -26,12 +27,12 @@ class TwitchClip extends Component {
   }
 
   render() {
-    const { clip, id, autoplay, muted, height, width, allowFullscreen, ...props } = this.props;
+    const { clip, id, autoplay, muted, height, width, allowFullscreen, parent, migration, ...props } = this.props;
 
     return (
       <iframe
         title={`Twitch Clip Embed - ${id}`}
-        src={getClipEmbedURL(clip, autoplay, muted)}
+        src={getClipEmbedURL(clip, autoplay, muted, parent, migration)}
         id={id}
         height={height}
         width={width}
@@ -50,7 +51,8 @@ TwitchClip.propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   allowFullscreen: PropTypes.bool,
-  parent: PropTypes.arrayOf(PropTypes.string).isRequired
+  parent: PropTypes.arrayOf(PropTypes.string).isRequired,
+  migration: PropTypes.bool
 };
 
 TwitchClip.defaultProps = {
@@ -59,7 +61,8 @@ TwitchClip.defaultProps = {
   muted: false,
   height: MEDIA_DEFAULT_HEIGHT,
   width: MEDIA_DEFAULT_WIDTH,
-  allowFullscreen: true
+  allowFullscreen: true,
+  migration: true
 };
 
 export default TwitchClip;

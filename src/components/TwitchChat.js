@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CHAT_DEFAULT_HEIGHT, CHAT_DEFAULT_WIDTH, TWITCH_CHAT_URL } from '../constants';
+import { parseParentQuery } from '../utils';
 
-const getChatEmbedURL = (channel, theme) => {
+const getChatEmbedURL = (channel, theme, parent, migration) => {
   const themeQuery = theme === 'dark' ? '?darkpopout' : '';
-  return `${TWITCH_CHAT_URL}/${channel}/chat${themeQuery}`;
+  const migrationFirstChar = theme !== 'dark' ? '?' : '&';
+  return `${TWITCH_CHAT_URL}/${channel}/chat${themeQuery}${migrationFirstChar}migration=${migration.toString()}${parseParentQuery(parent)}`;
 };
 
 class TwitchChat extends Component {
@@ -27,13 +29,13 @@ class TwitchChat extends Component {
   }
 
   render() {
-    const { channel, height, id, width, theme, ...props } = this.props;
+    const { channel, height, id, width, theme, parent, migration, ...props } = this.props;
 
     return (
       <iframe
         title={`Twitch Chat - ${id}`}
         id={id}
-        src={getChatEmbedURL(channel, theme)}
+        src={getChatEmbedURL(channel, theme, parent, migration)}
         height={height}
         width={width}
         {...props}
@@ -48,14 +50,16 @@ TwitchChat.propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   theme: PropTypes.oneOf(['light', 'dark']),
-  parent: PropTypes.arrayOf(PropTypes.string).isRequired
+  parent: PropTypes.arrayOf(PropTypes.string).isRequired,
+  migration: PropTypes.bool
 };
 
 TwitchChat.defaultProps = {
   id: 'twitch-chat-embed',
   height: CHAT_DEFAULT_HEIGHT,
   width: CHAT_DEFAULT_WIDTH,
-  theme: 'light'
+  theme: 'light',
+  migration: true
 };
 
 export default TwitchChat;
