@@ -8,6 +8,15 @@ A Twitch embed wrapper for React.js.
 [![github stars](https://badgen.net/github/stars/moonstar-x/react-twitch-embed)](https://github.com/moonstar-x/react-twitch-embed)
 [![github issues](https://badgen.net/github/issues/moonstar-x/react-twitch-embed)](https://github.com/moonstar-x/react-twitch-embed/issues)
 
+## A Quick Note
+
+If your project is currently only using `TwitchChat` or `TwitchClip` you will need to update this package to the `>2.0.0` version and take into account
+the `parent` prop required for these two components. If you haven't updated this package, these components **will stop working after the 10th June of 2020**.
+
+Moreover, after the 10th of June 2020 deadline, all sites that implement these components will need to run in **HTTPS**. Unless Twitch releases an update
+on this, this requirement will also apply for local environments. For more information, check out the [Twitch Dev Discussion thread regarding this change](https://discuss.dev.twitch.tv/t/twitch-embedded-player-migration-timeline-update/25588/14?u=moonstar_x).
+
+
 ## Installation
 
 ```bash
@@ -34,6 +43,7 @@ yarn add react-twitch-embed
 * `width` **\<Number | String\>**: Player embed width in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `940`) 
 * `autoplay` **\<Boolean\>**: Make player autoplay media once ready. (Default: `true`)
 * `muted` **\<Boolean\>**: Initialize player with the volume set to `0`. (Default: `false`)
+* `parent` **\<Array\<String\>\>**: An array containing the domain URLs that will embed your site. (Default: `[]`)
 * `onAuthenticate` **\<Func\>**: User authenticated event handler. (Default: `() => null`)
 * `onVideoPlay` **\<Func\>**: Video play event handler. Receives an object with a `sessionId` property. (Default: `() => null`)
 * `onVideoPause` **\<Func\>**: Video pause event handler. (Default: `() => null`)
@@ -48,6 +58,8 @@ check out the [Twitch Video & Clips Documentation](https://dev.twitch.tv/docs/em
 * `height` **\<Number | String\>**: Chat embed height in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `500`)
 * `width` **\<Number | String\>**: Chat embed width in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `350`)
 * `theme` **\<Enum\>**: Theme of the chat emebed. Available values: `light` and `dark`. (Default: `light`)
+* `parent` **\<Array\<String\>\>**: An array containing the domain URL of the site that is embedding Twitch and the domain URLs that will embed your site. **Required**.
+* `migration` **\<Boolean\>**: Enable the migration settings for the embed so that any change that will be implemented to the Twitch embeds will not result in a failed embed. Changing this prop is not recommended. (Default: `true`)
 * `...props`: The rest of the props are supplied to chat embed `iframe` node.
 
 ### TwitchClip
@@ -60,6 +72,8 @@ clicked on it yet. (Default: `false`)
 * `height` **\<Number | String\>**: Clip embed height in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `480`)
 * `width` **\<Number | String\>**: Clip embed width in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `940`)
 * `allowFullscreen` **\<Boolean\>**: Allow the player to go on fullscreen mode. (Default: `true`)
+* `parent` **\<Array\<String\>\>**: An array containing the domain URL of the site that is embedding Twitch and the domain URLs that will embed your site. **Required**.
+* `migration` **\<Boolean\>**: Enable the migration settings for the embed so that any change that will be implemented to the Twitch embeds will not result in a failed embed. Changing this prop is not recommended. (Default: `true`)
 * `...props`: The rest of the props are supplied to the clip embed `iframe` node.
 
 ### TwitchPlayer
@@ -76,6 +90,7 @@ clicked on it yet. (Default: `false`)
 * `allowFullscreen` **\<Boolean\>**: Allow the player to go on fullscreen mode. (Default: `true`)
 * `time` **\<String\>**: Time in the video where playback starts. Needs to be formatted like: `1h2m3s`. (Default: `0h0m0s`)
 * `hideControls` **\<Boolean\>**: Whether the player should hide the controls UI or not. Keyboard events will still be captured by the player embed (i.e: the spacebar will still pause the video). (Default: `false`)
+* `parent` **\<Array\<String\>\>**: An array containing the domain URLs that will embed your site. (Default: `[]`)
 * `onEnded` **\<Func\>**: Video or stream ended event handler. (Default: `() => null`)
 * `onPause` **\<Func\>**: Player is paused event handler. (Default: `() => null`)
 * `onPlay` **\<Func\>**: Player just unpaused event handler. (Default: `() => null`)
@@ -114,6 +129,13 @@ check out the [Twitch Video & Clips Documentation](https://dev.twitch.tv/docs/em
 > If you need multiple embeds of the same type on the same page, you need to supply an `id` prop to each one, otherwise the embeds
 > will mount on the same node, making them stick to each other.
 
+* **Why are the `parent` props required for `TwitchChat` and `TwitchClip` and not for the other ones?**
+> `TwitchChat` and `TwitchClip` are not interactive embeds, they're raw `iframes`. For the other components, the embed scripts will automatically
+> inject the domain through which your site is being accessed as the embed parent, making this prop not required for these components.
+
+* **My embeds don't work, they just show an error JSON body.**
+> Make sure that the you're specifying the `parent` prop for `TwitchChat` and `TwitchClip` and that your site is running in **HTTPS**.
+
 * **Is there a demo?**
 > Not yet, once I get enough time, I'll make a demo page.
 
@@ -133,9 +155,9 @@ const Stream = () => {
         muted
         onVideoPause={() => console.log(':(')}
       />
-      <TwitchChat className="chat-embed-boder" channel="moonstar_x" theme="dark" />
-      <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" />
-      <TwitchPlayer video="333014765" />
+      <TwitchChat channel="moonstar_x" theme="dark" parent={['localhost']} />
+      <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" parent={['localhost', 'mycoolsite.com']} />
+      <TwitchPlayer video="333014765" parent={['mycoolsite.com']} />
     </div>
   );
 }
