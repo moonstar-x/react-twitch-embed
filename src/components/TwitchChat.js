@@ -3,12 +3,6 @@ import PropTypes from 'prop-types';
 import { CHAT_DEFAULT_HEIGHT, CHAT_DEFAULT_WIDTH, TWITCH_CHAT_URL } from '../constants';
 import { parseParentQuery } from '../utils';
 
-const getChatEmbedURL = (channel, theme, parent, migration) => {
-  const themeQuery = theme === 'dark' ? '?darkpopout' : '';
-  const migrationFirstChar = theme !== 'dark' ? '?' : '&';
-  return `${TWITCH_CHAT_URL}/${channel}/chat${themeQuery}${migrationFirstChar}migration=${migration.toString()}${parseParentQuery(parent)}`;
-};
-
 class TwitchChat extends Component {
   componentDidMount() {
     this._validateProps();
@@ -28,14 +22,22 @@ class TwitchChat extends Component {
     }
   }
 
+  _createEmbedURL() {
+    const { channel, theme, parent, migration } = this.props;
+
+    const themeQuery = theme === 'dark' ? '?darkpopout' : '';
+    const migrationFirstChar = theme !== 'dark' ? '?' : '&';
+    return `${TWITCH_CHAT_URL}/${channel}/chat${themeQuery}${migrationFirstChar}migration=${migration.toString()}${parseParentQuery(parent)}`;
+  }
+
   render() {
-    const { channel, height, id, width, theme, parent, migration, ...props } = this.props;
+    const { height, id, width, ...props } = this.props;
 
     return (
       <iframe
         title={`Twitch Chat - ${id}`}
         id={id}
-        src={getChatEmbedURL(channel, theme, parent, migration)}
+        src={this._createEmbedURL()}
         height={height}
         width={width}
         {...props}

@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import { MEDIA_DEFAULT_HEIGHT, MEDIA_DEFAULT_WIDTH, TWITCH_CLIP_URL } from '../constants';
 import { parseParentQuery } from '../utils';
 
-const getClipEmbedURL = (clip, autoplay, muted, parent, migration) => {
-  return `${TWITCH_CLIP_URL}?clip=${clip}&autoplay=${autoplay}&muted=${muted}&migration=${migration.toString()}${parseParentQuery(parent)}`;
-};
-
 class TwitchClip extends Component {
   componentDidMount() {
     this._validateProps();
@@ -26,13 +22,19 @@ class TwitchClip extends Component {
     }
   }
 
+  _createEmbedURL() {
+    const { clip, autoplay, muted, parent, migration } = this.props;
+
+    return `${TWITCH_CLIP_URL}?clip=${clip}&autoplay=${autoplay}&muted=${muted}&migration=${migration.toString()}${parseParentQuery(parent)}`;
+  }
+
   render() {
-    const { clip, id, autoplay, muted, height, width, allowFullscreen, parent, migration, ...props } = this.props;
+    const { id, height, width, allowFullscreen, ...props } = this.props;
 
     return (
       <iframe
         title={`Twitch Clip Embed - ${id}`}
-        src={getClipEmbedURL(clip, autoplay, muted, parent, migration)}
+        src={this._createEmbedURL()}
         id={id}
         height={height}
         width={width}
