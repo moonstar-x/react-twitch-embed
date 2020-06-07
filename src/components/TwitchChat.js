@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { CHAT_DEFAULT_HEIGHT, CHAT_DEFAULT_WIDTH } from '../constants';
-import { getChatEmbedURL } from '../utils';
+import { CHAT_DEFAULT_HEIGHT, CHAT_DEFAULT_WIDTH, TWITCH_CHAT_URL } from '../constants';
+
+const getChatEmbedURL = (channel, theme) => {
+  const themeQuery = theme === 'dark' ? '?darkpopout' : '';
+  return `${TWITCH_CHAT_URL}/${channel}/chat${themeQuery}`;
+};
 
 class TwitchChat extends Component {
   componentDidMount() {

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MEDIA_DEFAULT_HEIGHT, MEDIA_DEFAULT_WIDTH } from '../constants';
-import { getClipEmbedURL } from '../utils';
+import { MEDIA_DEFAULT_HEIGHT, MEDIA_DEFAULT_WIDTH, TWITCH_CLIP_URL } from '../constants';
+
+const getClipEmbedURL = (clip, autoplay, muted) => {
+  return `${TWITCH_CLIP_URL}?clip=${clip}&autoplay=${autoplay}&muted=${muted}`;
+};
 
 class TwitchClip extends Component {
   componentDidMount() {
