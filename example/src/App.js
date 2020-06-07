@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { TwitchEmbed, TwitchPlayer } from 'react-twitch-embed';
+import { TwitchClip, TwitchChat } from 'react-twitch-embed';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <TwitchEmbed channel="moonstar_x" />
-        <TwitchPlayer channel="moonstar_x" />
+        <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" parent={['localhost']} />
+        <TwitchChat channel="moonstar_x" parent={['localhost']} />
       </div>
     );
   }

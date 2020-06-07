@@ -16,6 +16,10 @@ class TwitchClip extends Component {
     if (!this.props.clip) {
       throw new Error('A clip prop must be supplied to TwitchClip!');
     }
+
+    if (!this.props.parent || this.props.parent.length < 1) {
+      throw new Error('A parent prop must be supplied to TwitchClip containing the URLs that embed Twitch!');
+    }
   }
 
   render() {
@@ -42,7 +46,8 @@ TwitchClip.propTypes = {
   muted: PropTypes.bool,
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  allowFullscreen: PropTypes.bool
+  allowFullscreen: PropTypes.bool,
+  parent: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 TwitchClip.defaultProps = {

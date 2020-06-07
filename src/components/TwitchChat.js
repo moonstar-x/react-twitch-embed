@@ -16,6 +16,10 @@ class TwitchChat extends Component {
     if (!this.props.channel) {
       throw new Error('A channel prop must be supplied to TwitchChat!');
     }
+
+    if (!this.props.parent || this.props.parent.length < 1) {
+      throw new Error('A parent prop must be supplied to TwitchChat containing the URLs that embed Twitch!');
+    }
   }
 
   render() {
@@ -39,7 +43,8 @@ TwitchChat.propTypes = {
   id: PropTypes.string,
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  theme: PropTypes.oneOf(['light', 'dark'])
+  theme: PropTypes.oneOf(['light', 'dark']),
+  parent: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 TwitchChat.defaultProps = {
