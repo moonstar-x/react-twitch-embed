@@ -1,15 +1,19 @@
-import { TWITCH_CHAT_URL, TWITCH_CLIP_URL } from './constants';
-
-const getChatEmbedURL = (channel, theme) => {
-  const themeQuery = theme === 'dark' ? '?darkpopout' : '';
-  return `${TWITCH_CHAT_URL}/${channel}/chat${themeQuery}`;
+const parseParentQuery = (parent) => {
+  return `&parent=${parent.join('&parent=')}`;
 };
 
-const getClipEmbedURL = (clip, autoplay, muted) => {
-  return `${TWITCH_CLIP_URL}?clip=${clip}&autoplay=${autoplay}&muted=${muted}`;
+const getUnknownProps = (props, propTypes) => {
+  return Object.keys(props).reduce((unknown, prop) => {
+    if (propTypes.hasOwnProperty(prop)) {
+      return unknown;
+    }
+
+    unknown[prop] = props[prop];
+    return unknown;
+  }, {});
 };
 
 export {
-  getChatEmbedURL,
-  getClipEmbedURL
+  parseParentQuery,
+  getUnknownProps
 };
