@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TWITCH_PLAYER_URL, MEDIA_DEFAULT_WIDTH, MEDIA_DEFAULT_HEIGHT } from '../constants';
+import { getUnknownProps } from '../utils';
 
 const mediaProps = ['channel', 'collection', 'video'];
 let scriptElement = null;
@@ -32,7 +33,8 @@ const propTypes = {
   onPlaying: PropTypes.func,
   onOffline: PropTypes.func,
   onOnline: PropTypes.func,
-  onReady: PropTypes.func
+  onReady: PropTypes.func,
+  parent: PropTypes.arrayOf(PropTypes.string)
 };
 
 const defaultProps = {
@@ -55,7 +57,8 @@ const defaultProps = {
   onPlaying: () => null,
   onOffline: () => null,
   onOnline: () => null,
-  onReady: () => null
+  onReady: () => null,
+  parent: []
 };
 
 class TwitchPlayer extends Component {
@@ -117,7 +120,8 @@ class TwitchPlayer extends Component {
       autoplay: this.props.autoplay,
       muted: this.props.muted,
       time: this.props.time,
-      controls: !this.props.hideControls
+      controls: !this.props.hideControls,
+      parent: this.props.parent
     };
 
     if (this.props.channel) {
@@ -158,14 +162,7 @@ class TwitchPlayer extends Component {
   }
 
   render() {
-    const unknownProps = Object.keys(this.props).reduce((unknown, prop) => {
-      if (propTypes.hasOwnProperty(prop)) {
-        return unknown;
-      }
-
-      unknown[prop] = this.props[prop];
-      return unknown;
-    }, {});
+    const unknownProps = getUnknownProps(this.props, propTypes);
 
     return (
       <div id={this.props.id} style={{ width: this.props.width, height: this.props.height }} {...unknownProps} />

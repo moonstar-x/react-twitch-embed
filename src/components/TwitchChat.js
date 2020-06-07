@@ -1,7 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { CHAT_DEFAULT_HEIGHT, CHAT_DEFAULT_WIDTH } from '../constants';
-import { getChatEmbedURL } from '../utils';
+import { CHAT_DEFAULT_HEIGHT, CHAT_DEFAULT_WIDTH, TWITCH_CHAT_URL } from '../constants';
+import { getUnknownProps, parseParentQuery } from '../utils';
+
+const propTypes = {
+  channel: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  theme: PropTypes.oneOf(['light', 'dark']),
+  parent: PropTypes.arrayOf(PropTypes.string).isRequired,
+  migration: PropTypes.bool
+};
+
+const defaultProps = {
+  id: 'twitch-chat-embed',
+  height: CHAT_DEFAULT_HEIGHT,
+  width: CHAT_DEFAULT_WIDTH,
+  theme: 'light',
+  migration: true
+};
 
 class TwitchChat extends Component {
   componentDidMount() {
@@ -16,37 +34,38 @@ class TwitchChat extends Component {
     if (!this.props.channel) {
       throw new Error('A channel prop must be supplied to TwitchChat!');
     }
+
+    if (!this.props.parent || this.props.parent.length < 1) {
+      throw new Error('A parent prop must be supplied to TwitchChat containing the URLs that embed Twitch!');
+    }
+  }
+
+  _createEmbedURL() {
+    const { channel, theme, parent, migration } = this.props;
+
+    const themeQuery = theme === 'dark' ? '?darkpopout' : '';
+    const migrationFirstChar = theme !== 'dark' ? '?' : '&';
+    return `${TWITCH_CHAT_URL}/${channel}/chat${themeQuery}${migrationFirstChar}migration=${migration.toString()}${parseParentQuery(parent)}`;
   }
 
   render() {
-    const { channel, height, id, width, theme, ...props } = this.props;
+    const { height, id, width } = this.props;
+    const unknownProps = getUnknownProps(this.props, propTypes);
 
     return (
       <iframe
         title={`Twitch Chat - ${id}`}
         id={id}
-        src={getChatEmbedURL(channel, theme)}
+        src={this._createEmbedURL()}
         height={height}
         width={width}
-        {...props}
+        {...unknownProps}
       />
     );
   }
 }
 
-TwitchChat.propTypes = {
-  channel: PropTypes.string.isRequired,
-  id: PropTypes.string,
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  theme: PropTypes.oneOf(['light', 'dark'])
-};
-
-TwitchChat.defaultProps = {
-  id: 'twitch-chat-embed',
-  height: CHAT_DEFAULT_HEIGHT,
-  width: CHAT_DEFAULT_WIDTH,
-  theme: 'light'
-};
+TwitchChat.propTypes = propTypes;
+TwitchChat.defaultProps = defaultProps;
 
 export default TwitchChat;
