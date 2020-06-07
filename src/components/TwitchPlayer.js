@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TWITCH_PLAYER_URL, MEDIA_DEFAULT_WIDTH, MEDIA_DEFAULT_HEIGHT } from '../constants';
+import { getUnknownProps } from '../utils';
 
 const mediaProps = ['channel', 'collection', 'video'];
 let scriptElement = null;
@@ -161,14 +162,7 @@ class TwitchPlayer extends Component {
   }
 
   render() {
-    const unknownProps = Object.keys(this.props).reduce((unknown, prop) => {
-      if (propTypes.hasOwnProperty(prop)) {
-        return unknown;
-      }
-
-      unknown[prop] = this.props[prop];
-      return unknown;
-    }, {});
+    const unknownProps = getUnknownProps(this.props, propTypes);
 
     return (
       <div id={this.props.id} style={{ width: this.props.width, height: this.props.height }} {...unknownProps} />

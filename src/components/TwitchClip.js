@@ -1,7 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MEDIA_DEFAULT_HEIGHT, MEDIA_DEFAULT_WIDTH, TWITCH_CLIP_URL } from '../constants';
-import { parseParentQuery } from '../utils';
+import { getUnknownProps, parseParentQuery } from '../utils';
+
+const propTypes = {
+  clip: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  autoplay: PropTypes.bool,
+  muted: PropTypes.bool,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  allowFullscreen: PropTypes.bool,
+  parent: PropTypes.arrayOf(PropTypes.string).isRequired,
+  migration: PropTypes.bool
+};
+
+const defaultProps = {
+  id: 'twitch-clip-embed',
+  autoplay: true,
+  muted: false,
+  height: MEDIA_DEFAULT_HEIGHT,
+  width: MEDIA_DEFAULT_WIDTH,
+  allowFullscreen: true,
+  migration: true
+};
 
 class TwitchClip extends Component {
   componentDidMount() {
@@ -29,7 +51,8 @@ class TwitchClip extends Component {
   }
 
   render() {
-    const { id, height, width, allowFullscreen, ...props } = this.props;
+    const { id, height, width, allowFullscreen } = this.props;
+    const unknownProps = getUnknownProps(this.props, propTypes);
 
     return (
       <iframe
@@ -39,32 +62,13 @@ class TwitchClip extends Component {
         height={height}
         width={width}
         allowFullScreen={allowFullscreen}
-        {...props}
+        {...unknownProps}
       />
     );
   }
 }
 
-TwitchClip.propTypes = {
-  clip: PropTypes.string.isRequired,
-  id: PropTypes.string,
-  autoplay: PropTypes.bool,
-  muted: PropTypes.bool,
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  allowFullscreen: PropTypes.bool,
-  parent: PropTypes.arrayOf(PropTypes.string).isRequired,
-  migration: PropTypes.bool
-};
-
-TwitchClip.defaultProps = {
-  id: 'twitch-clip-embed',
-  autoplay: true,
-  muted: false,
-  height: MEDIA_DEFAULT_HEIGHT,
-  width: MEDIA_DEFAULT_WIDTH,
-  allowFullscreen: true,
-  migration: true
-};
+TwitchClip.propTypes = propTypes;
+TwitchClip.defaultProps = defaultProps;
 
 export default TwitchClip;

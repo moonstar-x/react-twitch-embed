@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TWITCH_EMBED_URL, MEDIA_DEFAULT_WIDTH, MEDIA_DEFAULT_HEIGHT } from '../constants';
+import { getUnknownProps } from '../utils';
 
 let scriptElement = null;
 
@@ -139,14 +140,7 @@ class TwitchEmbed extends Component {
   }
 
   render() {
-    const unknownProps = Object.keys(this.props).reduce((unknown, prop) => {
-      if (propTypes.hasOwnProperty(prop)) {
-        return unknown;
-      }
-
-      unknown[prop] = this.props[prop];
-      return unknown;
-    }, {});
+    const unknownProps = getUnknownProps(this.props, propTypes);
 
     return (
       <div style={{ width: this.props.width, height: this.props.height }} id={this.props.id} {...unknownProps} />
