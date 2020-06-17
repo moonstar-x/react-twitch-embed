@@ -9,7 +9,7 @@ const propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   theme: PropTypes.oneOf(['light', 'dark']),
-  parent: PropTypes.arrayOf(PropTypes.string).isRequired,
+  parent: PropTypes.arrayOf(PropTypes.string),
   migration: PropTypes.bool
 };
 
@@ -18,7 +18,8 @@ const defaultProps = {
   height: CHAT_DEFAULT_HEIGHT,
   width: CHAT_DEFAULT_WIDTH,
   theme: 'light',
-  migration: true
+  migration: true,
+  parent: []
 };
 
 class TwitchChat extends Component {
@@ -33,10 +34,6 @@ class TwitchChat extends Component {
   _validateProps() {
     if (!this.props.channel) {
       throw new Error('A channel prop must be supplied to TwitchChat!');
-    }
-
-    if (!this.props.parent || this.props.parent.length < 1) {
-      throw new Error('A parent prop must be supplied to TwitchChat containing the URLs that embed Twitch!');
     }
   }
 
@@ -59,6 +56,7 @@ class TwitchChat extends Component {
         src={this._createEmbedURL()}
         height={height}
         width={width}
+        frameBorder={0}
         {...unknownProps}
       />
     );
