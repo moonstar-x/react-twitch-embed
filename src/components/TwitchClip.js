@@ -11,7 +11,7 @@ const propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   allowFullscreen: PropTypes.bool,
-  parent: PropTypes.arrayOf(PropTypes.string).isRequired,
+  parent: PropTypes.arrayOf(PropTypes.string),
   migration: PropTypes.bool
 };
 
@@ -22,7 +22,8 @@ const defaultProps = {
   height: MEDIA_DEFAULT_HEIGHT,
   width: MEDIA_DEFAULT_WIDTH,
   allowFullscreen: true,
-  migration: true
+  migration: true,
+  parent: []
 };
 
 class TwitchClip extends Component {
@@ -37,10 +38,6 @@ class TwitchClip extends Component {
   _validateProps() {
     if (!this.props.clip) {
       throw new Error('A clip prop must be supplied to TwitchClip!');
-    }
-
-    if (!this.props.parent || this.props.parent.length < 1) {
-      throw new Error('A parent prop must be supplied to TwitchClip containing the URLs that embed Twitch!');
     }
   }
 

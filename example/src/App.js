@@ -7,9 +7,9 @@ class App extends Component {
       <div>
         <TwitchPlayer channel="moonstar_x" />
         <TwitchEmbed channel="moonstar_x" />
-        <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" parent={['localhost', '127.0.0.1']} migration={false} />
-        <TwitchChat channel="moonstar_x" parent={['localhost']} />
-        <TwitchChat theme="dark" channel="moonstar_x" parent={['localhost']} migration={false} />
+        <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" />
+        <TwitchChat channel="moonstar_x" parent={['mycoolsite.com']} />
+        <TwitchChat theme="dark" channel="moonstar_x" />
       </div>
     );
   }
