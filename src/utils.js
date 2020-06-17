@@ -1,5 +1,5 @@
 const parseParentQuery = (parent) => {
-  return `&parent=${parent.join('&parent=')}`;
+  return `&parent=${[window.location.hostname, ...parent].join('&parent=')}`;
 };
 
 const getUnknownProps = (props, propTypes) => {

@@ -58,7 +58,7 @@ check out the [Twitch Video & Clips Documentation](https://dev.twitch.tv/docs/em
 * `height` **\<Number | String\>**: Chat embed height in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `500`)
 * `width` **\<Number | String\>**: Chat embed width in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `350`)
 * `theme` **\<Enum\>**: Theme of the chat emebed. Available values: `light` and `dark`. (Default: `light`)
-* `parent` **\<Array\<String\>\>**: An array containing the domain URL of the site that is embedding Twitch and the domain URLs that will embed your site. **Required**.
+* `parent` **\<Array\<String\>\>**: An array containing the domain URLs that will embed your site. (Default: `[]`)
 * `migration` **\<Boolean\>**: Enable the migration settings for the embed so that any change that will be implemented to the Twitch embeds will not result in a failed embed. Changing this prop is not recommended. (Default: `true`)
 * `...props`: The rest of the props are supplied to chat embed `iframe` node.
 
@@ -72,7 +72,7 @@ clicked on it yet. (Default: `false`)
 * `height` **\<Number | String\>**: Clip embed height in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `480`)
 * `width` **\<Number | String\>**: Clip embed width in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `940`)
 * `allowFullscreen` **\<Boolean\>**: Allow the player to go on fullscreen mode. (Default: `true`)
-* `parent` **\<Array\<String\>\>**: An array containing the domain URL of the site that is embedding Twitch and the domain URLs that will embed your site. **Required**.
+* `parent` **\<Array\<String\>\>**: An array containing the domain URLs that will embed your site. (Default: `[]`)
 * `migration` **\<Boolean\>**: Enable the migration settings for the embed so that any change that will be implemented to the Twitch embeds will not result in a failed embed. Changing this prop is not recommended. (Default: `true`)
 * `...props`: The rest of the props are supplied to the clip embed `iframe` node.
 
@@ -129,9 +129,9 @@ check out the [Twitch Video & Clips Documentation](https://dev.twitch.tv/docs/em
 > If you need multiple embeds of the same type on the same page, you need to supply an `id` prop to each one, otherwise the embeds
 > will mount on the same node, making them stick to each other.
 
-* **Why are the `parent` props required for `TwitchChat` and `TwitchClip` and not for the other ones?**
-> `TwitchChat` and `TwitchClip` are not interactive embeds, they're raw `iframes`. For the other components, the embed scripts will automatically
-> inject the domain through which your site is being accessed as the embed parent, making this prop not required for these components.
+* **Why are the `parent` props no longer required for `TwitchChat` and `TwitchClip`?**
+> When I first implemented the Twitch Embed updates, I didn't think too much of the usage of these components. I overlooked how easy it was to just
+> add the domain URL of the site that is embedding these components into the parent parameter of the iframe URLs.
 
 * **My embeds don't work, they just show an error JSON body.**
 > Make sure that the you're specifying the `parent` prop for `TwitchChat` and `TwitchClip` and that your site is running in **HTTPS**.
@@ -155,9 +155,9 @@ const Stream = () => {
         muted
         onVideoPause={() => console.log(':(')}
       />
-      <TwitchChat channel="moonstar_x" theme="dark" parent={['localhost']} />
-      <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" parent={['localhost', 'mycoolsite.com']} />
-      <TwitchPlayer video="333014765" parent={['mycoolsite.com']} />
+      <TwitchChat channel="moonstar_x" theme="dark" />
+      <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" parent={['mycoolsite.com, anotherawesomesite.net']} />
+      <TwitchPlayer video="333014765" />
     </div>
   );
 }
