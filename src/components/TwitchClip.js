@@ -59,6 +59,7 @@ class TwitchClip extends Component {
         height={height}
         width={width}
         allowFullScreen={allowFullscreen}
+        frameBorder={0}
         {...unknownProps}
       />
     );

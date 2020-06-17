@@ -56,6 +56,7 @@ class TwitchChat extends Component {
         src={this._createEmbedURL()}
         height={height}
         width={width}
+        frameBorder={0}
         {...unknownProps}
       />
     );
