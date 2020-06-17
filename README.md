@@ -155,15 +155,9 @@ const Stream = () => {
         muted
         onVideoPause={() => console.log(':(')}
       />
-<<<<<<< HEAD
       <TwitchChat channel="moonstar_x" theme="dark" />
       <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" parent={['mycoolsite.com, anotherawesomesite.net']} />
       <TwitchPlayer video="333014765" />
-=======
-      <TwitchChat channel="moonstar_x" theme="dark" parent={['localhost']} />
-      <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" parent={['localhost', 'mycoolsite.com']} />
-      <TwitchPlayer video="333014765" parent={['mycoolsite.com']} />
->>>>>>> master
     </div>
   );
 }
