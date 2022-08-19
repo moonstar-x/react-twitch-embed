@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "greencoast"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "react/jsx-no-bind": "off",
+    "jsx-quotes": ["error", "prefer-double"],
+    "one-var": "off",
+    "max-len": ["warn", {
+      "code": 120,
+      "tabWidth": 2,
+      "ignoreUrls": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true,
+      "ignoreRegExpLiterals": true
+    }],
+    "no-extra-parens": "off",
+    "space-before-function-paren": ["error", {
+      "anonymous": "never",
+      "named": "never",
+      "asyncArrow": "always"
+    }]}
+}
