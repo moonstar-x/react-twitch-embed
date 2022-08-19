@@ -17,5 +17,9 @@ export const DEFAULTS = {
 };
 
 export const STORYBOOK_DEFAULTS = {
-  channel: 'moonstar_x'
+  channel: 'moonstar_x',
+  clips: [
+    'AdventurousBusyWormTwitchRaid-7vDEE8L5ur9j9dzi',
+    'ColdbloodedSavagePterodactylTheTarFu-nB9EPedzd7eI1Rih'
+  ]
 };
