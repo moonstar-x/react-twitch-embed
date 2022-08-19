@@ -1,8 +1,8 @@
 import { URLS } from '../constants';
 
 export interface TwitchChatGenerateUrlOptions {
-  darkMode?: boolean,
-  parent?: string | string[],
+  darkMode?: boolean
+  parent?: string | string[]
   enableMigration?: boolean
 }
 
