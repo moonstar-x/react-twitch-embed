@@ -23,9 +23,8 @@ const TwitchChat: React.FC<TwitchChatProps> = ({
   width,
   ...props
 }) => {
-  const chatUrl = generateUrl(channel, {
+  const chatUrl = generateUrl(channel, parent, {
     darkMode: darkMode ?? generateUrlDefaultOptions.darkMode,
-    parent,
     enableMigration: enableMigration ?? generateUrlDefaultOptions.enableMigration
   });
 
