@@ -1,5 +1,6 @@
-import * as Constants from './constants';
+import TwitchChat, { TwitchChatProps } from './components/TwitchChat';
 
 export {
-  Constants
+  TwitchChat,
+  TwitchChatProps
 };

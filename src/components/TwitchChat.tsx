@@ -1,0 +1,44 @@
+import React from 'react';
+import { DEFAULTS } from '../constants';
+import { generateUrl, generateUrlDefaultOptions } from '../utils/TwitchChat';
+
+export interface TwitchChatProps extends React.HTMLAttributes<HTMLIFrameElement> {
+  channel: string
+  darkMode?: boolean
+  parent: string | string[]
+  enableMigration?: boolean
+
+  height?: string | number
+  width?: string | number
+}
+
+const TwitchChat: React.FC<TwitchChatProps> = ({
+  channel,
+  darkMode,
+  parent,
+  enableMigration,
+
+  title,
+  height,
+  width,
+  ...props
+}) => {
+  const chatUrl = generateUrl(channel, {
+    darkMode: darkMode ?? generateUrlDefaultOptions.darkMode,
+    parent,
+    enableMigration: enableMigration ?? generateUrlDefaultOptions.enableMigration
+  });
+
+  return (
+    <iframe
+      title={title ?? 'TwitchChat'}
+      height={height ?? DEFAULTS.CHAT.HEIGHT}
+      width={width ?? DEFAULTS.CHAT.WIDTH}
+      src={chatUrl}
+      frameBorder={0}
+      {...props}
+    />
+  );
+};
+
+export default TwitchChat;

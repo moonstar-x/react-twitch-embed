@@ -15,3 +15,7 @@ export const DEFAULTS = {
     WIDTH: 940
   }
 };
+
+export const STORYBOOK_DEFAULTS = {
+  channel: 'moonstar_x'
+};
