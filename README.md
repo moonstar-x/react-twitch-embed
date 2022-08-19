@@ -1,6 +1,6 @@
 # react-twitch-embed
 
-A Twitch embed wrapper for React.js.
+A Twitch player embed React component.
 
 [![npm version](https://img.shields.io/npm/v/react-twitch-embed.svg)](https://www.npmjs.com/package/react-twitch-embed)
 [![npm downloads](https://badgen.net/npm/dt/react-twitch-embed)](https://www.npmjs.com/package/react-twitch-embed)
@@ -8,28 +8,35 @@ A Twitch embed wrapper for React.js.
 [![github stars](https://badgen.net/github/stars/moonstar-x/react-twitch-embed)](https://github.com/moonstar-x/react-twitch-embed)
 [![github issues](https://badgen.net/github/issues/moonstar-x/react-twitch-embed)](https://github.com/moonstar-x/react-twitch-embed/issues)
 
-## A Quick Note
-
-If your project is currently only using `TwitchChat` or `TwitchClip` you will need to update this package to the `>2.0.0` version and take into account
-the `parent` prop required for these two components. If you haven't updated this package, these components **will stop working after the 10th June of 2020**.
-
-Moreover, after the 10th of June 2020 deadline, all sites that implement these components will need to run in **HTTPS**. Unless Twitch releases an update
-on this, this requirement will also apply for local environments. For more information, check out the [Twitch Dev Discussion thread regarding this change](https://discuss.dev.twitch.tv/t/twitch-embedded-player-migration-timeline-update/25588/14?u=moonstar_x).
-
-
 ## Installation
 
 ```bash
-npm install --save react-twitch-embed
+npm install react-twitch-embed
 ```
 
-or
+## Components
 
-```bash
-yarn add react-twitch-embed
-```
+### TwitchChat
 
-## Available props
+* `channel` **\<String\>**: Channel name to embed the chat.
+* `parent` **\<String|Array\<String\>\>**: A string or array of strings corresponding to the URL of the site that embeds this chat window. Should probably be set to `'localhost'` or `window.location.hostname`.
+* `darkMode` **\<Boolean?\>**: Whether the chat embed should be displayed in dark mode or not. (Default: `false`)
+* `enableMigration` **\<Boolean?\>**: Enable the migration settings for the embed so that any change that will be implemented to the Twitch embeds will not result in a failed embed. Changing this prop is not recommended. (Default: `true`)
+* `height` **\<Number? | String?\>**: Chat embed height in pixels. Strings formatted as percentage are allowed (i.e `'50%'`). (Default: `500`)
+* `width` **\<Number? | String?\>**: Chat embed width in pixels. Strings formatted as percentage are allowed (i.e `'50%'`). (Default: `350`)
+* `...props`: The rest of the props are supplied to the chat embed's `iframe` node.
+
+### TwitchClip
+
+* `clip` **\<String\>**: ID of the clip to showcase.
+* `parent` **\<String|Array\<String\>\>**: A string or array of strings corresponding to the URL of the site that embeds this clip player. Should probably be set to `'localhost'` or `window.location.hostname`.
+* `autoplay` **\<Boolean?\>**: Whether the clip starts playing once the player is ready. (Default: `true`)
+* `muted` **\<Boolean?\>**: Start the clip with the volume set to `0`. **Note:** By default, the clip player will be muted if the user hasn't
+  clicked on it yet. (Default: `false`)
+* `enableMigration` **\<Boolean?\>**: Enable the migration settings for the embed so that any change that will be implemented to the Twitch embeds will not result in a failed embed. Changing this prop is not recommended. (Default: `true`)
+* `height` **\<Number? | String?\>**: Clip embed height in pixels. Strings formatted as percentage are allowed (i.e `'50%'`). (Default: `480`)
+* `width` **\<Number? | String?\>**: Clip embed width in pixels. Strings formatted as percentage are allowed (i.e `'50%'`). (Default: `940`)
+* `...props`: The rest of the props are supplied to the clip embed's `iframe` node.
 
 ### TwitchEmbed
 
@@ -50,31 +57,6 @@ yarn add react-twitch-embed
 * `onVideoReady` **\<Func\>**: Player ready event handler. Receives the player object. For more information on the available methods for the player object,
 check out the [Twitch Video & Clips Documentation](https://dev.twitch.tv/docs/embed/video-and-clips#interactive-frames-for-live-streams-and-vods) (Default: `() => null`)
 * `...props`: The rest of the props are supplied to the `div` node where the `iframe` is mounted.
-
-### TwitchChat
-
-* `channel` **\<String\>**: Channel name to embed the chat. **Required**.
-* `id` **\<String\>**: ID of the `iframe` node where the chat embed is mounted. Specify this if you have multiple chat embeds on the same page. (Default: `twitch-chat-embed`)
-* `height` **\<Number | String\>**: Chat embed height in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `500`)
-* `width` **\<Number | String\>**: Chat embed width in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `350`)
-* `theme` **\<Enum\>**: Theme of the chat emebed. Available values: `light` and `dark`. (Default: `light`)
-* `parent` **\<Array\<String\>\>**: An array containing the domain URLs that will embed your site. (Default: `[]`)
-* `migration` **\<Boolean\>**: Enable the migration settings for the embed so that any change that will be implemented to the Twitch embeds will not result in a failed embed. Changing this prop is not recommended. (Default: `true`)
-* `...props`: The rest of the props are supplied to chat embed `iframe` node.
-
-### TwitchClip
-
-* `clip` **\<String\>**: ID of the clip to showcase. **Required.**
-* `id` **\<String\>**: ID of the `iframe` node where the clip embed is mounted. Specify this if you have multiple clip embeds on the same page. (Default: `twitch-clip-embed`)
-* `autoplay` **\<Boolean\>**: Whether the clip starts playing once the player is ready. (Default: `true`)
-* `muted` **\<Boolean\>**: Start the clip with the volume set to `0`. **Note:** By default, the clip player will be muted if the user hasn't
-clicked on it yet. (Default: `false`)
-* `height` **\<Number | String\>**: Clip embed height in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `480`)
-* `width` **\<Number | String\>**: Clip embed width in pixels. Allows strings formatted as percentage (i.e `'50%'`). (Default: `940`)
-* `allowFullscreen` **\<Boolean\>**: Allow the player to go on fullscreen mode. (Default: `true`)
-* `parent` **\<Array\<String\>\>**: An array containing the domain URLs that will embed your site. (Default: `[]`)
-* `migration` **\<Boolean\>**: Enable the migration settings for the embed so that any change that will be implemented to the Twitch embeds will not result in a failed embed. Changing this prop is not recommended. (Default: `true`)
-* `...props`: The rest of the props are supplied to the clip embed `iframe` node.
 
 ### TwitchPlayer
 
@@ -113,7 +95,7 @@ check out the [Twitch Video & Clips Documentation](https://dev.twitch.tv/docs/em
 > from outside, then `TwitchEmbed` should be fine. The key difference is that `TwitchPlayer` not only accepts VODs and collections,
 > it also has access to a more complete player object. Also, switching channels in `TwitchPlayer` is more fluid because it uses the
 > player API to switch the channel. This also happens on `TwitchEmbed` but only when `withChat` is set to `false`. If `withChat` is
-> set to `true` o `TwitchEmbed` and the `channel` prop is updated, it will recreate the embed. Another key difference is that `TwitchEmbed`
+> set to `true` on `TwitchEmbed` and the `channel` prop is updated, it will recreate the embed. Another key difference is that `TwitchEmbed`
 > will download the Twitch Embed and Player scripts. When multiple Embeds are mounted in the same page, the Player script will be downloaded
 > for each `TwitchEmbed` on the page. `TwitchPlayer` will only download it once.
 
@@ -121,23 +103,8 @@ check out the [Twitch Video & Clips Documentation](https://dev.twitch.tv/docs/em
 > Twitch handles clips and VODs differently, this is also true for their embeds. `TwitchClip` will only work for clips whereas
 > `TwitchPlayer` will work for VODs, collections and streams.
 
-* **Why are there multiple `404` errors in my console?**
-> Twitch is currently undergoing an API migration and the embeds still use the old API which is already deprecated. The embeds still
-> work fine.
-
-* **Why are my embeds sticking next to each other?**
-> If you need multiple embeds of the same type on the same page, you need to supply an `id` prop to each one, otherwise the embeds
-> will mount on the same node, making them stick to each other.
-
-* **Why are the `parent` props no longer required for `TwitchChat` and `TwitchClip`?**
-> When I first implemented the Twitch Embed updates, I didn't think too much of the usage of these components. I overlooked how easy it was to just
-> add the domain URL of the site that is embedding these components into the parent parameter of the iframe URLs.
-
 * **My embeds don't work, they just show an error JSON body.**
-> Make sure that the you're specifying the `parent` prop for `TwitchChat` and `TwitchClip` and that your site is running in **HTTPS**.
-
-* **Is there a demo?**
-> Not yet, once I get enough time, I'll make a demo page.
+> Make sure that you're specifying the `parent` prop for `TwitchChat` and `TwitchClip` and that your site is running in **HTTPS**.
 
 ## Example usage
 
