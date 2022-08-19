@@ -25,6 +25,7 @@
       "asyncArrow": "always"
     }],
     "react/prop-types": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "max-statements": ["error", 16]
   }
 }
