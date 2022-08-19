@@ -1,7 +1,5 @@
-import Example, { ExampleProps } from './components/Example';
+import * as Constants from './constants';
 
 export {
-  Example,
-
-  ExampleProps
+  Constants
 };
