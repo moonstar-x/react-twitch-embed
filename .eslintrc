@@ -27,6 +27,7 @@
     "react/prop-types": "off",
     "react/require-default-props": "off",
     "max-statements": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "no-undefined": "off"
   }
 }
