@@ -7,6 +7,7 @@ import { TwitchWindow, TwitchEmbedConstructor, TwitchEmbedInstance } from '../ty
 
 // TODO: Revise functionality for video and collection
 // TODO: Remove forced ID
+// TODO: Events should expose embed.
 export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   channel: string
   parent?: string | string[] | null

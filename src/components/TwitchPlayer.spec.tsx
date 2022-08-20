@@ -38,7 +38,13 @@ describe('Components -> TwitchPlayer', () => {
   it('should call setCollection when updating the collection prop.', () => {
     const { rerender } = render(<TwitchPlayer collection={channel} id={id} />);
     rerender(<TwitchPlayer collection="new_collection" id={id} />);
-    expect(setCollectionMock).toHaveBeenCalledWith('new_collection');
+    expect(setCollectionMock).toHaveBeenCalledWith('new_collection', undefined);
+  });
+
+  it('should call setCollection when updating the collection and video prop.', () => {
+    const { rerender } = render(<TwitchPlayer collection={channel} id={id} />);
+    rerender(<TwitchPlayer collection="new_collection" video="new_video" id={id} />);
+    expect(setCollectionMock).toHaveBeenCalledWith('new_collection', 'vnew_video');
   });
 
   it('should call setVideo when updating the video prop.', () => {
