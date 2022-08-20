@@ -5,6 +5,14 @@ import TwitchEmbed, { TwitchEmbedProps } from './components/TwitchEmbed';
 import useScript, { ScriptState } from './hooks/useScript';
 import usePrevious from './hooks/usePrevious';
 
+import {
+  TwitchWindow,
+  TwitchEmbedConstructor,
+  TwitchEmbedConstructorOptions,
+  TwitchEmbedInstance,
+  TwitchPlayerInstance
+} from './types';
+
 export {
   TwitchChat,
   TwitchChatProps,
@@ -15,5 +23,11 @@ export {
 
   useScript,
   ScriptState,
-  usePrevious
+  usePrevious,
+
+  TwitchWindow,
+  TwitchEmbedConstructor,
+  TwitchEmbedConstructorOptions,
+  TwitchEmbedInstance,
+  TwitchPlayerInstance
 };
