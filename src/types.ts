@@ -1,5 +1,34 @@
-export interface TwitchPlayerInstance {
+// TODO: Improve these types
+
+export interface TwitchPlayerInstance extends EventTarget {
   setChannel: (channel: string) => void
+}
+
+export interface TwitchPlayerConstructorOptions {
+  channel?: string
+  video?: string
+  collection?: string
+  height?: string | number
+  parent?: string[]
+  width?: string | number
+  autoplay?: boolean
+  muted?: boolean
+  time?: string
+}
+
+export interface TwitchPlayerConstructor {
+  new (id: string, options: TwitchPlayerConstructorOptions): TwitchPlayerInstance
+
+  CAPTIONS: string
+  ENDED: string
+  PAUSE: string
+  PLAY: string
+  PLAYBACK_BLOCKED: string
+  PLAYING: string
+  OFFLINE: string
+  ONLINE: string
+  READY: string
+  SEEK: string
 }
 
 export interface TwitchEmbedInstance extends EventTarget {
@@ -33,5 +62,6 @@ export interface TwitchEmbedConstructor {
 export interface TwitchWindow extends Window {
   Twitch?: {
     Embed?: TwitchEmbedConstructor
+    Player?: TwitchPlayerConstructor
   }
 }

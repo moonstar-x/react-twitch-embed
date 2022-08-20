@@ -4,6 +4,8 @@ import { Story } from '@storybook/react';
 import TwitchEmbed, { TwitchEmbedProps } from '../components/TwitchEmbed';
 import { STORYBOOK_DEFAULTS } from '../constants';
 
+// TODO: Add component controlled player.
+
 export default {
   title: 'TwitchEmbed',
   component: TwitchEmbed

@@ -2,6 +2,7 @@ import React from 'react';
 import { DEFAULTS } from '../constants';
 import { generateUrl, generateUrlDefaultOptions } from '../utils/TwitchClip';
 
+// TODO: Remove parent forced and enableMigration
 export interface TwitchClipProps extends React.HTMLAttributes<HTMLIFrameElement> {
   clip: string
   autoplay?: boolean
@@ -12,6 +13,8 @@ export interface TwitchClipProps extends React.HTMLAttributes<HTMLIFrameElement>
   height?: string | number
   width?: string | number
 }
+
+// TODO: Create defaultProps.
 
 const TwitchClip: React.FC<TwitchClipProps> = ({
   clip,

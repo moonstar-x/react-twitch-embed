@@ -5,6 +5,7 @@ import { DEFAULTS, URLS } from '../constants';
 import { noop, typedNoop } from '../utils/misc';
 import { TwitchWindow, TwitchEmbedConstructor, TwitchEmbedInstance } from '../types';
 
+// TODO: Revise functionality for video and collection
 export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   channel: string
   parent?: string | string[] | null
@@ -24,6 +25,7 @@ export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string | number
 }
 
+// TODO: Remove the parent default
 const defaultProps: Partial<TwitchEmbedProps> = {
   parent: null,
   allowFullscreen: true,
@@ -60,10 +62,10 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
 }) => {
   const { loading, error } = useScript(URLS.TWITCH_EMBED_URL);
   const previousChannel = usePrevious(channel);
-  const embed = useRef<TwitchEmbedInstance | null>(null);
+  const embed = useRef<TwitchEmbedInstance | null>(null); // TODO: Remove null
 
   const createEmbed = useCallback((EmbedConstructor: TwitchEmbedConstructor) => {
-    document.getElementById(id)!.innerHTML = '';
+    document.getElementById(id)!.innerHTML = ''; // TODO: Revise this
 
     const embed = new EmbedConstructor(id, {
       allowfullscreen: allowFullscreen ?? defaultProps.allowFullscreen,
@@ -111,6 +113,7 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
       return;
     }
 
+    // TODO: Multiple props updating containing channel might cause the others to be ignored.
     if (embed.current && previousChannel !== channel) {
       embed.current.getPlayer().setChannel(channel);
       return;
@@ -134,6 +137,7 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
     previousChannel
   ]);
 
+  // TODO: Remove this efefct.
   useEffect(() => {
     if (!embed || !embed.current || !channel) {
       return;
