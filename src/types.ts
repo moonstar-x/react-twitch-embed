@@ -2,6 +2,8 @@
 
 export interface TwitchPlayerInstance extends EventTarget {
   setChannel: (channel: string) => void
+  setVideo: (video: string) => void
+  setCollection: (collection: string) => void
 }
 
 export interface TwitchPlayerConstructorOptions {

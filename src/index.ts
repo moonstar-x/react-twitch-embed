@@ -1,6 +1,7 @@
 import TwitchChat, { TwitchChatProps } from './components/TwitchChat';
 import TwitchClip, { TwitchClipProps } from './components/TwitchClip';
 import TwitchEmbed, { TwitchEmbedProps } from './components/TwitchEmbed';
+import TwitchPlayer, { TwitchPlayerProps } from './components/TwitchPlayer';
 
 import useScript, { ScriptState } from './hooks/useScript';
 import usePrevious from './hooks/usePrevious';
@@ -20,6 +21,8 @@ export {
   TwitchClipProps,
   TwitchEmbed,
   TwitchEmbedProps,
+  TwitchPlayer,
+  TwitchPlayerProps,
 
   useScript,
   ScriptState,
