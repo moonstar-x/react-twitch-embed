@@ -5,6 +5,7 @@ import { DEFAULTS, URLS } from '../constants';
 import { noop } from '../utils/misc';
 import { TwitchWindow, TwitchPlayerConstructor, TwitchPlayerInstance } from '../types';
 
+// TODO: Remove forced ID
 export interface TwitchPlayerProps extends React.HTMLAttributes<HTMLDivElement> {
   parent?: string | string[]
   channel?: string
@@ -13,6 +14,9 @@ export interface TwitchPlayerProps extends React.HTMLAttributes<HTMLDivElement> 
   autoplay?: boolean
   muted?: boolean
   time?: string
+  playsInline?: boolean
+  allowFullscreen?: boolean
+  hideControls?: boolean
 
   onCaptions?: () => void
   onEnded?: () => void
@@ -34,6 +38,9 @@ const defaultProps: Partial<TwitchPlayerProps> = {
   autoplay: true,
   muted: false,
   time: '0h0m0s',
+  playsInline: true,
+  allowFullscreen: true,
+  hideControls: false,
   onCaptions: noop,
   onEnded: noop,
   onPause: noop,
@@ -56,6 +63,9 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
   autoplay,
   muted,
   time,
+  playsInline,
+  allowFullscreen,
+  hideControls,
 
   onCaptions,
   onEnded,
@@ -88,6 +98,9 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
       autoplay: autoplay ?? defaultProps.autoplay,
       muted: muted ?? defaultProps.muted,
       time: time ?? defaultProps.time,
+      playsinline: playsInline ?? defaultProps.playsInline,
+      allowfullscreen: allowFullscreen ?? defaultProps.allowFullscreen,
+      controls: !hideControls ?? !defaultProps.hideControls,
       height: '100%',
       width: '100%'
     });
@@ -105,9 +118,11 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
 
     return player;
   }, [
+    allowFullscreen,
     autoplay,
     channel,
     collection,
+    hideControls,
     id,
     muted,
     onCaptions,
@@ -121,6 +136,7 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
     onReady,
     onSeek,
     parent,
+    playsInline,
     time,
     video
   ]);
@@ -160,6 +176,8 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
     }
 
     player.current = createPlayer((window as TwitchWindow).Twitch!.Player!);
+    console.dir((window as TwitchWindow).Twitch!.Player!);
+    console.dir(player.current);
   }, [
     channel,
     collection,

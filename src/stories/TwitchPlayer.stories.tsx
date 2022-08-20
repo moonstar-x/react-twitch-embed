@@ -41,6 +41,34 @@ ChannelNotMuted.args = {
   muted: false
 };
 
+export const ChannelFullscreenAllowed = Template.bind({});
+ChannelFullscreenAllowed.args = {
+  channel: STORYBOOK_DEFAULTS.channel,
+  id: STORYBOOK_DEFAULTS.channel,
+  allowFullscreen: true
+};
+
+export const ChannelFullscreenForbidden = Template.bind({});
+ChannelFullscreenForbidden.args = {
+  channel: STORYBOOK_DEFAULTS.channel,
+  id: STORYBOOK_DEFAULTS.channel,
+  allowFullscreen: false
+};
+
+export const ChannelControlsVisible = Template.bind({});
+ChannelControlsVisible.args = {
+  channel: STORYBOOK_DEFAULTS.channel,
+  id: STORYBOOK_DEFAULTS.channel,
+  hideControls: false
+};
+
+export const ChannelControlsHidden = Template.bind({});
+ChannelControlsHidden.args = {
+  channel: STORYBOOK_DEFAULTS.channel,
+  id: STORYBOOK_DEFAULTS.channel,
+  hideControls: true
+};
+
 export const ChannelSmoothSwitching = () => {
   const channels = [STORYBOOK_DEFAULTS.channel, 'LCS', 'ibai'];
   const [index, setIndex] = useState<number>(0);

@@ -6,6 +6,7 @@ import { noop, typedNoop } from '../utils/misc';
 import { TwitchWindow, TwitchEmbedConstructor, TwitchEmbedInstance } from '../types';
 
 // TODO: Revise functionality for video and collection
+// TODO: Remove forced ID
 export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   channel: string
   parent?: string | string[] | null

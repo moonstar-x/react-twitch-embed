@@ -16,6 +16,9 @@ export interface TwitchPlayerConstructorOptions {
   autoplay?: boolean
   muted?: boolean
   time?: string
+  playsinline?: boolean
+  allowfullscreen?: boolean
+  controls?: boolean
 }
 
 export interface TwitchPlayerConstructor {
