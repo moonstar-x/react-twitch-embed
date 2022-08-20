@@ -44,6 +44,6 @@ describe('Components -> TwitchPlayer', () => {
   it('should call setVideo when updating the video prop.', () => {
     const { rerender } = render(<TwitchPlayer video={channel} id={id} />);
     rerender(<TwitchPlayer video="new_video" id={id} />);
-    expect(setVideoMock).toHaveBeenCalledWith('vnew_video');
+    expect(setVideoMock).toHaveBeenCalledWith('vnew_video', 0);
   });
 });

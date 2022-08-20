@@ -3,6 +3,7 @@ import React, { Fragment, useState } from 'react';
 import { Story } from '@storybook/react';
 import TwitchPlayer, { TwitchPlayerProps } from '../components/TwitchPlayer';
 import { STORYBOOK_DEFAULTS } from '../constants';
+import { TwitchPlayerInstance } from '../types';
 
 // TODO: Add component controlled player.
 
@@ -94,6 +95,23 @@ export const ChannelSmoothSwitching = () => {
         <button style={style} onClick={handlePrevious}>Previous</button>
         <span style={style}>Current channel: {channel}</span>
         <button style={style} onClick={handleNext}>Next</button>
+      </div>
+    </Fragment>
+  );
+};
+
+export const ChannelTest = () => {
+  const [data, setData] = useState<string>('');
+
+  const handlePlaying = (player: TwitchPlayerInstance) => {
+    setData(JSON.stringify(player.getQualities()));
+  };
+
+  return (
+    <Fragment>
+      <TwitchPlayer onPlaying={handlePlaying} channel="sandraskins" id="twitch-embed" />
+      <div>
+        {data}
       </div>
     </Fragment>
   );

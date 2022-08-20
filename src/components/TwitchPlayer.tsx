@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import useScript from '../hooks/useScript';
 import usePrevious from '../hooks/usePrevious';
 import { DEFAULTS, URLS } from '../constants';
-import { noop } from '../utils/misc';
-import { TwitchWindow, TwitchPlayerConstructor, TwitchPlayerInstance } from '../types';
+import { typedNoop, typedNoop2 } from '../utils/misc';
+import { TwitchWindow, TwitchPlayerConstructor, TwitchPlayerInstance, OnPlayData, OnSeekData } from '../types';
 
 // TODO: Remove forced ID
-export interface TwitchPlayerProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TwitchPlayerProps {
   parent?: string | string[]
   channel?: string
   video?: string
@@ -18,16 +18,16 @@ export interface TwitchPlayerProps extends React.HTMLAttributes<HTMLDivElement> 
   allowFullscreen?: boolean
   hideControls?: boolean
 
-  onCaptions?: () => void
-  onEnded?: () => void
-  onPause?: () => void
-  onPlay?: () => void
-  onPlaybackBlocked?: () => void
-  onPlaying?: () => void
-  onOffline?: () => void
-  onOnline?: () => void
-  onReady?: () => void
-  onSeek?: () => void
+  onCaptions?: (player: TwitchPlayerInstance, captions: string) => void
+  onEnded?: (player: TwitchPlayerInstance) => void
+  onPause?: (player: TwitchPlayerInstance) => void
+  onPlay?: (player: TwitchPlayerInstance, data: OnPlayData) => void
+  onPlaybackBlocked?: (player: TwitchPlayerInstance) => void
+  onPlaying?: (player: TwitchPlayerInstance) => void
+  onOffline?: (player: TwitchPlayerInstance) => void
+  onOnline?: (player: TwitchPlayerInstance) => void
+  onReady?: (player: TwitchPlayerInstance) => void
+  onSeek?: (player: TwitchPlayerInstance, data: OnSeekData) => void
 
   id: string
   height?: string | number
@@ -41,16 +41,16 @@ const defaultProps: Partial<TwitchPlayerProps> = {
   playsInline: true,
   allowFullscreen: true,
   hideControls: false,
-  onCaptions: noop,
-  onEnded: noop,
-  onPause: noop,
-  onPlay: noop,
-  onPlaybackBlocked: noop,
-  onPlaying: noop,
-  onOffline: noop,
-  onOnline: noop,
-  onReady: noop,
-  onSeek: noop,
+  onCaptions: typedNoop2<TwitchPlayerInstance, string>(),
+  onEnded: typedNoop<TwitchPlayerInstance>(),
+  onPause: typedNoop<TwitchPlayerInstance>(),
+  onPlay: typedNoop2<TwitchPlayerInstance, OnPlayData>(),
+  onPlaybackBlocked: typedNoop<TwitchPlayerInstance>(),
+  onPlaying: typedNoop<TwitchPlayerInstance>(),
+  onOffline: typedNoop<TwitchPlayerInstance>(),
+  onOnline: typedNoop<TwitchPlayerInstance>(),
+  onReady: typedNoop<TwitchPlayerInstance>(),
+  onSeek: typedNoop2<TwitchPlayerInstance, OnSeekData>(),
   height: DEFAULTS.MEDIA.HEIGHT,
   width: DEFAULTS.MEDIA.WIDTH
 };
@@ -105,16 +105,46 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
       width: '100%'
     });
 
-    player.addEventListener(Player.CAPTIONS, onCaptions ?? defaultProps.onCaptions!);
-    player.addEventListener(Player.ENDED, onEnded ?? defaultProps.onEnded!);
-    player.addEventListener(Player.PAUSE, onPause ?? defaultProps.onPause!);
-    player.addEventListener(Player.PLAY, onPlay ?? defaultProps.onPlay!);
-    player.addEventListener(Player.PLAYBACK_BLOCKED, onPlaybackBlocked ?? defaultProps.onPlaybackBlocked!);
-    player.addEventListener(Player.PLAYING, onPlaying ?? defaultProps.onPlaying!);
-    player.addEventListener(Player.OFFLINE, onOffline ?? defaultProps.onOffline!);
-    player.addEventListener(Player.ONLINE, onOnline ?? defaultProps.onOnline!);
-    player.addEventListener(Player.READY, onReady ?? defaultProps.onReady!);
-    player.addEventListener(Player.SEEK, onSeek ?? defaultProps.onSeek!);
+    player.addEventListener(Player.CAPTIONS, (captions: string) => {
+      const handler = onCaptions ?? defaultProps.onCaptions!;
+      return handler(player, captions);
+    });
+    player.addEventListener(Player.ENDED, () => {
+      const handler = onEnded ?? defaultProps.onEnded!;
+      return handler(player);
+    });
+    player.addEventListener(Player.PAUSE, () => {
+      const handler = onPause ?? defaultProps.onPause!;
+      return handler(player);
+    });
+    player.addEventListener(Player.PLAY, (data: OnPlayData) => {
+      const handler = onPlay ?? defaultProps.onPlay!;
+      return handler(player, data);
+    });
+    player.addEventListener(Player.PLAYBACK_BLOCKED, () => {
+      const handler = onPlaybackBlocked ?? defaultProps.onPlaybackBlocked!;
+      return handler(player);
+    });
+    player.addEventListener(Player.PLAYING, () => {
+      const handler = onPlaying ?? defaultProps.onPlaying!;
+      return handler(player);
+    });
+    player.addEventListener(Player.OFFLINE, () => {
+      const handler = onOffline ?? defaultProps.onOffline!;
+      return handler(player);
+    });
+    player.addEventListener(Player.ONLINE, () => {
+      const handler = onOnline ?? defaultProps.onOnline!;
+      return handler(player);
+    });
+    player.addEventListener(Player.READY, () => {
+      const handler = onReady ?? defaultProps.onReady!;
+      return handler(player);
+    });
+    player.addEventListener(Player.SEEK, (data: OnSeekData) => {
+      const handler = onSeek ?? defaultProps.onSeek!;
+      return handler(player, data);
+    });
 
     return player;
   }, [
@@ -160,13 +190,14 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
         somethingChanged = true;
       }
 
+      // TODO: Check video setting with v.
       if (video && previousMedia?.video !== video) {
-        player.current!.setVideo(`v${video}`);
+        player.current!.setVideo(`v${video}`, 0);
         somethingChanged = true;
       }
 
       if (collection && previousMedia?.collection !== collection) {
-        player.current!.setCollection(collection);
+        player.current!.setCollection(collection, video ? `v${video}` : undefined);
         somethingChanged = true;
       }
 
@@ -176,8 +207,6 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
     }
 
     player.current = createPlayer((window as TwitchWindow).Twitch!.Player!);
-    console.dir((window as TwitchWindow).Twitch!.Player!);
-    console.dir(player.current);
   }, [
     channel,
     collection,
