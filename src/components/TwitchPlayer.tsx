@@ -34,6 +34,8 @@ export interface TwitchPlayerProps {
   width?: string | number
 }
 
+// TODO: Use Component.defaultProps instead of constant ??.
+
 const defaultProps: Partial<TwitchPlayerProps> = {
   autoplay: true,
   muted: false,

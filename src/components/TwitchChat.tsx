@@ -14,6 +14,7 @@ export interface TwitchChatProps extends React.HTMLAttributes<HTMLIFrameElement>
 }
 
 // TODO: Create defaultProps.
+// TODO: Use Component.defaultProps instead of constant ??.
 
 const TwitchChat: React.FC<TwitchChatProps> = ({
   channel,

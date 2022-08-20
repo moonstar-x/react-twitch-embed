@@ -15,6 +15,8 @@ export interface TwitchClipProps extends React.HTMLAttributes<HTMLIFrameElement>
 }
 
 // TODO: Create defaultProps.
+// TODO: Use Component.defaultProps instead of constant ??.
+
 
 const TwitchClip: React.FC<TwitchClipProps> = ({
   clip,

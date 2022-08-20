@@ -28,6 +28,8 @@ export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 // TODO: Remove the parent default
+// TODO: Use Component.defaultProps instead of constant ??.
+
 const defaultProps: Partial<TwitchEmbedProps> = {
   parent: null,
   allowFullscreen: true,
