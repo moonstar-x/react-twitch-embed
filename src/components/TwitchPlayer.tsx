@@ -7,15 +7,15 @@ import { objectCompareWithIgnoredKeys } from '../utils/object';
 import { TwitchWindow, TwitchPlayerConstructor, TwitchPlayerInstance, OnPlayData, OnSeekData } from '../types';
 
 export interface TwitchPlayerProps {
-  parent?: string | string[]
   channel?: string
   video?: string
   collection?: string
+  parent?: string | string[]
   autoplay?: boolean
   muted?: boolean
   time?: string
-  playsInline?: boolean
   allowFullscreen?: boolean
+  playsInline?: boolean
   hideControls?: boolean
 
   onCaptions?: (player: TwitchPlayerInstance, captions: string) => void
@@ -35,12 +35,12 @@ export interface TwitchPlayerProps {
 }
 
 const defaultProps: Partial<TwitchPlayerProps> = {
-  autoplay: true,
-  muted: false,
-  time: '0h0m0s',
-  playsInline: true,
-  allowFullscreen: true,
-  hideControls: false,
+  autoplay: DEFAULTS.AUTOPLAY,
+  muted: DEFAULTS.MUTED,
+  time: DEFAULTS.TIME,
+  allowFullscreen: DEFAULTS.ALLOW_FULLSCREEN,
+  playsInline: DEFAULTS.INLINE,
+  hideControls: DEFAULTS.HIDE_CONTROLS,
   onCaptions: typedNoop2<TwitchPlayerInstance, string>(),
   onEnded: typedNoop<TwitchPlayerInstance>(),
   onPause: typedNoop<TwitchPlayerInstance>(),
@@ -51,7 +51,7 @@ const defaultProps: Partial<TwitchPlayerProps> = {
   onOnline: typedNoop<TwitchPlayerInstance>(),
   onReady: typedNoop<TwitchPlayerInstance>(),
   onSeek: typedNoop2<TwitchPlayerInstance, OnSeekData>(),
-  id: 'twitch-player',
+  id: DEFAULTS.ID.TWITCH_PLAYER,
   height: DEFAULTS.MEDIA.HEIGHT,
   width: DEFAULTS.MEDIA.WIDTH
 };
@@ -67,15 +67,15 @@ const shouldReconstructPlayer = (previousProps: TwitchPlayerProps | undefined, p
 
 const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
   const {
-    parent,
     channel,
     video,
     collection,
+    parent,
     autoplay,
     muted,
     time,
-    playsInline,
     allowFullscreen,
+    playsInline,
     hideControls,
 
     onCaptions,
@@ -106,15 +106,15 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
     }
 
     const player = new Player(id!, {
-      parent: typeof parent === 'string' ? [parent] : parent,
       channel,
       video,
       collection,
+      parent: typeof parent === 'string' ? [parent] : parent,
       autoplay,
       muted,
       time,
-      playsinline: playsInline,
       allowfullscreen: allowFullscreen,
+      playsinline: playsInline,
       controls: !hideControls,
       height: '100%',
       width: '100%'
@@ -133,13 +133,16 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
 
     return player;
   }, [
-    allowFullscreen,
-    autoplay,
     channel,
+    video,
     collection,
-    hideControls,
-    id,
+    parent,
+    autoplay,
     muted,
+    time,
+    allowFullscreen,
+    playsInline,
+    hideControls,
     onCaptions,
     onEnded,
     onOffline,
@@ -150,10 +153,7 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
     onPlaying,
     onReady,
     onSeek,
-    parent,
-    playsInline,
-    time,
-    video
+    id
   ]);
 
   useEffect(() => {

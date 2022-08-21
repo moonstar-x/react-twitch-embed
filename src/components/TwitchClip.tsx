@@ -1,13 +1,13 @@
 import React from 'react';
 import useHostname from '../hooks/useHostname';
 import { DEFAULTS } from '../constants';
-import { generateUrl, generateUrlDefaultOptions } from '../utils/TwitchClip';
+import { generateUrl } from '../utils/TwitchClip';
 
 export interface TwitchClipProps extends React.HTMLAttributes<HTMLIFrameElement> {
   clip: string
+  parent?: string | string[]
   autoplay?: boolean
   muted?: boolean
-  parent?: string | string[]
 
   title?: string
   height?: string | number
@@ -15,18 +15,18 @@ export interface TwitchClipProps extends React.HTMLAttributes<HTMLIFrameElement>
 }
 
 const defaultProps: Partial<TwitchClipProps> = {
-  autoplay: generateUrlDefaultOptions.autoplay,
-  muted: generateUrlDefaultOptions.muted,
-  title: 'TwitchClip',
+  autoplay: DEFAULTS.AUTOPLAY,
+  muted: DEFAULTS.MUTED,
+  title: DEFAULTS.TITLE.TWITCH_CLIP,
   height: DEFAULTS.MEDIA.HEIGHT,
   width: DEFAULTS.MEDIA.WIDTH
 };
 
 const TwitchClip: React.FC<TwitchClipProps> = ({
   clip,
+  parent,
   autoplay,
   muted,
-  parent,
 
   title,
   height,

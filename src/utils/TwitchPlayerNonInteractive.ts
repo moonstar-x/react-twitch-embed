@@ -1,4 +1,4 @@
-import { URLS } from '../constants';
+import { URLS, DEFAULTS } from '../constants';
 
 export interface TwitchPlayerNonInteractiveMedia {
   channel?: string
@@ -12,10 +12,10 @@ export interface TwitchPlayerNonInteractiveOptions {
   time?: string
 }
 
-export const generateUrlDefaultOptions: TwitchPlayerNonInteractiveOptions = {
-  autoplay: true,
-  muted: false,
-  time: '0h0m0s'
+const generateUrlDefaultOptions: TwitchPlayerNonInteractiveOptions = {
+  autoplay: DEFAULTS.AUTOPLAY,
+  muted: DEFAULTS.MUTED,
+  time: DEFAULTS.TIME
 };
 
 export const generateUrl = (

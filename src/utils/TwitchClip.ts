@@ -1,13 +1,13 @@
-import { URLS } from '../constants';
+import { URLS, DEFAULTS } from '../constants';
 
 export interface TwitchClipGenerateUrlOptions {
   autoplay?: boolean
   muted?: boolean
 }
 
-export const generateUrlDefaultOptions: TwitchClipGenerateUrlOptions = {
-  autoplay: false,
-  muted: false
+const generateUrlDefaultOptions: TwitchClipGenerateUrlOptions = {
+  autoplay: DEFAULTS.AUTOPLAY,
+  muted: DEFAULTS.MUTED
 };
 
 export const generateUrl = (

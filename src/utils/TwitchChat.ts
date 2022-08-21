@@ -1,11 +1,11 @@
-import { URLS } from '../constants';
+import { URLS, DEFAULTS } from '../constants';
 
 export interface TwitchChatGenerateUrlOptions {
   darkMode?: boolean
 }
 
-export const generateUrlDefaultOptions: TwitchChatGenerateUrlOptions = {
-  darkMode: false
+const generateUrlDefaultOptions: TwitchChatGenerateUrlOptions = {
+  darkMode: DEFAULTS.DARK_MODE
 };
 
 export const generateUrl = (

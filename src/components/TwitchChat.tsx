@@ -1,12 +1,12 @@
 import React from 'react';
 import useHostname from '../hooks/useHostname';
 import { DEFAULTS } from '../constants';
-import { generateUrl, generateUrlDefaultOptions } from '../utils/TwitchChat';
+import { generateUrl } from '../utils/TwitchChat';
 
 export interface TwitchChatProps extends React.HTMLAttributes<HTMLIFrameElement> {
   channel: string
-  darkMode?: boolean
   parent?: string | string[]
+  darkMode?: boolean
 
   title?: string
   height?: string | number
@@ -14,16 +14,16 @@ export interface TwitchChatProps extends React.HTMLAttributes<HTMLIFrameElement>
 }
 
 const defaultProps: Partial<TwitchChatProps> = {
-  darkMode: generateUrlDefaultOptions.darkMode,
-  title: 'TwitchChat',
+  darkMode: DEFAULTS.DARK_MODE,
+  title: DEFAULTS.TITLE.TWITCH_CHAT,
   height: DEFAULTS.CHAT.HEIGHT,
   width: DEFAULTS.CHAT.WIDTH
 };
 
 const TwitchChat: React.FC<TwitchChatProps> = ({
   channel,
-  darkMode,
   parent,
+  darkMode,
 
   title,
   height,

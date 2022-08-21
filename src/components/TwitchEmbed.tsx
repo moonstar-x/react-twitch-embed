@@ -6,17 +6,16 @@ import { typedNoop, typedNoop2 } from '../utils/misc';
 import { TwitchWindow, TwitchEmbedConstructor, TwitchEmbedInstance, OnPlayData, OnAuthenticateData } from '../types';
 import { objectCompareWithIgnoredKeys } from '../utils/object';
 
-// TODO: Check default values for every component.
 export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
+  allowFullscreen?: boolean
+  autoplay?: boolean
   channel?: string
   video?: string
   collection?: string
-  parent?: string | string[]
-  allowFullscreen?: boolean
   withChat?: boolean
-  darkMode?: boolean
-  autoplay?: boolean
   muted?: boolean
+  parent?: string | string[]
+  darkMode?: boolean
   time?: string
   hideControls?: boolean
 
@@ -31,18 +30,18 @@ export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const defaultProps: Partial<TwitchEmbedProps> = {
-  allowFullscreen: true,
-  withChat: true,
-  darkMode: true,
-  autoplay: true,
-  muted: false,
-  time: '0h0m0s',
-  hideControls: false,
+  allowFullscreen: DEFAULTS.ALLOW_FULLSCREEN,
+  autoplay: DEFAULTS.AUTOPLAY,
+  withChat: DEFAULTS.WITH_CHAT,
+  muted: DEFAULTS.MUTED,
+  darkMode: DEFAULTS.DARK_MODE,
+  time: DEFAULTS.TIME,
+  hideControls: DEFAULTS.HIDE_CONTROLS,
   onAuthenticate: typedNoop2<TwitchEmbedInstance, OnAuthenticateData>(),
   onVideoPlay: typedNoop2<TwitchEmbedInstance, OnPlayData>(),
   onVideoPause: typedNoop<TwitchEmbedInstance>(),
   onVideoReady: typedNoop<TwitchEmbedInstance>(),
-  id: 'twitch-embed',
+  id: DEFAULTS.ID.TWITCH_EMBED,
   height: DEFAULTS.MEDIA.HEIGHT,
   width: DEFAULTS.MEDIA.WIDTH
 };
@@ -58,15 +57,16 @@ const shouldReconstructEmbed = (previousProps: TwitchEmbedProps | undefined, pro
 
 const TwitchEmbed: React.FC<TwitchEmbedProps> = (props) => {
   const {
+    allowFullscreen,
+    autoplay,
     channel,
     video,
     collection,
-    parent,
-    allowFullscreen,
     withChat,
-    darkMode,
-    autoplay,
     muted,
+    parent,
+    darkMode,
+    time,
     hideControls,
 
     onAuthenticate,
@@ -94,14 +94,15 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = (props) => {
       allowfullscreen: allowFullscreen,
       autoplay,
       channel,
-      collection,
       video,
-      height: '100%',
+      collection,
       layout: withChat ? 'video-with-chat' : 'video',
       muted,
-      controls: !hideControls,
       parent: typeof parent === 'string' ? [parent] : parent,
       theme: darkMode ? 'dark' : 'light',
+      time,
+      controls: !hideControls,
+      height: '100%',
       width: '100%'
     });
 
@@ -117,16 +118,17 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = (props) => {
     channel,
     video,
     collection,
-    darkMode,
-    id,
+    withChat,
     muted,
+    parent,
+    darkMode,
+    time,
     hideControls,
     onAuthenticate,
     onVideoPause,
     onVideoPlay,
     onVideoReady,
-    parent,
-    withChat
+    id
   ]);
 
   useEffect(() => {
