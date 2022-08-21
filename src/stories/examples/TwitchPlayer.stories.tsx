@@ -1,13 +1,13 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
 import { Story } from '@storybook/react';
-import TwitchPlayer, { TwitchPlayerProps } from '../components/TwitchPlayer';
-import { STORYBOOK_DEFAULTS } from '../constants';
-import withNextMediaControls from './helpers/withNextMediaControls';
-import withVideoControls from './helpers/withVideoControls';
+import TwitchPlayer, { TwitchPlayerProps } from '../../components/TwitchPlayer';
+import { STORYBOOK_DEFAULTS } from '../../constants';
+import withNextMediaControls from '../helpers/withNextMediaControls';
+import withVideoControls from '../helpers/withVideoControls';
 
 export default {
-  title: 'TwitchPlayer',
+  title: 'Examples/TwitchPlayer',
   component: TwitchPlayer
 };
 

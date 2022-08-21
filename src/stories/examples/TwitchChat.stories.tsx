@@ -1,10 +1,10 @@
 import React from 'react';
 import { Story } from '@storybook/react';
-import TwitchChat, { TwitchChatProps } from '../components/TwitchChat';
-import { STORYBOOK_DEFAULTS } from '../constants';
+import TwitchChat, { TwitchChatProps } from '../../components/TwitchChat';
+import { STORYBOOK_DEFAULTS } from '../../constants';
 
 export default {
-  title: 'TwitchChat',
+  title: 'Examples/TwitchChat',
   component: TwitchChat
 };
 

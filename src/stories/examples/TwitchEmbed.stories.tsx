@@ -1,13 +1,13 @@
 /* eslint-disable react/no-multi-comp */
 import React, { Fragment } from 'react';
 import { Story } from '@storybook/react';
-import TwitchEmbed, { TwitchEmbedProps } from '../components/TwitchEmbed';
-import { STORYBOOK_DEFAULTS } from '../constants';
-import withNextMediaControls from './helpers/withNextMediaControls';
-import withVideoControls from './helpers/withVideoControls';
+import TwitchEmbed, { TwitchEmbedProps } from '../../components/TwitchEmbed';
+import { STORYBOOK_DEFAULTS } from '../../constants';
+import withNextMediaControls from '../helpers/withNextMediaControls';
+import withVideoControls from '../helpers/withVideoControls';
 
 export default {
-  title: 'TwitchEmbed',
+  title: 'Examples/TwitchEmbed',
   component: TwitchEmbed
 };
 

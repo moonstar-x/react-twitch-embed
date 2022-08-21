@@ -1,10 +1,10 @@
 import React from 'react';
 import { Story } from '@storybook/react';
-import TwitchPlayerNonInteractive, { TwitchPlayerNonInteractiveProps } from '../components/TwitchPlayerNonInteractive';
-import { STORYBOOK_DEFAULTS } from '../constants';
+import TwitchPlayerNonInteractive, { TwitchPlayerNonInteractiveProps } from '../../components/TwitchPlayerNonInteractive';
+import { STORYBOOK_DEFAULTS } from '../../constants';
 
 export default {
-  title: 'TwitchPlayerNonInteractive',
+  title: 'Examples/TwitchPlayerNonInteractive',
   component: TwitchPlayerNonInteractive
 };
 

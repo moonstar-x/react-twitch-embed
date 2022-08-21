@@ -1,10 +1,10 @@
 import React from 'react';
 import { Story } from '@storybook/react';
-import TwitchClip, { TwitchClipProps } from '../components/TwitchClip';
-import { STORYBOOK_DEFAULTS } from '../constants';
+import TwitchClip, { TwitchClipProps } from '../../components/TwitchClip';
+import { STORYBOOK_DEFAULTS } from '../../constants';
 
 export default {
-  title: 'TwitchClip',
+  title: 'Examples/TwitchClip',
   component: TwitchClip
 };
 
