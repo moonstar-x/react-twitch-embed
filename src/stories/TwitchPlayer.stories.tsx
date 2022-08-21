@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import React from 'react';
+import React, { useState } from 'react';
 import { Story } from '@storybook/react';
 import TwitchPlayer, { TwitchPlayerProps } from '../components/TwitchPlayer';
 import { STORYBOOK_DEFAULTS } from '../constants';
@@ -71,3 +71,27 @@ export const ChannelSmoothSwitching = withNextMediaControls(TwitchPlayer, 'chann
 export const VideosSmoothSwitching = withNextMediaControls(TwitchPlayer, 'video', STORYBOOK_DEFAULTS.videos);
 export const CollectionsSmoothSwitching = withNextMediaControls(TwitchPlayer, 'collection', STORYBOOK_DEFAULTS.collections);
 export const ControlledFromOutside = withVideoControls(TwitchPlayer, STORYBOOK_DEFAULTS.video);
+
+export const Test = () => {
+  const [props, setProps] = useState({
+    video: STORYBOOK_DEFAULTS.video,
+    muted: true
+  });
+
+  const updateProps = () => {
+    setProps({
+      video: STORYBOOK_DEFAULTS.videoInCollection,
+      muted: false
+    });
+  };
+
+  return (
+    <div>
+      <TwitchPlayer {...props} />
+      <button onClick={updateProps}>UPDATE</button>
+      <div>
+        {JSON.stringify(props)}
+      </div>
+    </div>
+  );
+};
