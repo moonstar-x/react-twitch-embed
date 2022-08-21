@@ -5,7 +5,6 @@ import { DEFAULTS, URLS } from '../constants';
 import { typedNoop, typedNoop2 } from '../utils/misc';
 import { TwitchWindow, TwitchPlayerConstructor, TwitchPlayerInstance, OnPlayData, OnSeekData } from '../types';
 
-// TODO: Remove forced ID
 export interface TwitchPlayerProps {
   parent?: string | string[]
   channel?: string
@@ -29,7 +28,7 @@ export interface TwitchPlayerProps {
   onReady?: (player: TwitchPlayerInstance) => void
   onSeek?: (player: TwitchPlayerInstance, data: OnSeekData) => void
 
-  id: string
+  id?: string
   height?: string | number
   width?: string | number
 }
@@ -53,6 +52,7 @@ const defaultProps: Partial<TwitchPlayerProps> = {
   onOnline: typedNoop<TwitchPlayerInstance>(),
   onReady: typedNoop<TwitchPlayerInstance>(),
   onSeek: typedNoop2<TwitchPlayerInstance, OnSeekData>(),
+  id: 'twitch-player',
   height: DEFAULTS.MEDIA.HEIGHT,
   width: DEFAULTS.MEDIA.WIDTH
 };
@@ -90,9 +90,12 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
   const player = useRef<TwitchPlayerInstance>();
 
   const createPlayer = useCallback((Player: TwitchPlayerConstructor) => {
-    document.getElementById(id)!.innerHTML = ''; // TODO: Revise this
+    const divHolder = document.getElementById(id!);
+    if (divHolder) {
+      divHolder.innerHTML = '';
+    }
 
-    const player = new Player(id, {
+    const player = new Player(id!, {
       parent: typeof parent === 'string' ? [parent] : parent,
       channel,
       video,
@@ -230,5 +233,7 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
     />
   );
 };
+
+TwitchPlayer.defaultProps = defaultProps;
 
 export default TwitchPlayer;

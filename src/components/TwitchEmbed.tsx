@@ -6,7 +6,6 @@ import { noop, typedNoop } from '../utils/misc';
 import { TwitchWindow, TwitchEmbedConstructor, TwitchEmbedInstance } from '../types';
 
 // TODO: Revise functionality for video and collection
-// TODO: Remove forced ID
 // TODO: Events should expose embed.
 export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   channel: string
@@ -22,7 +21,7 @@ export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   onVideoPause?: () => void
   onVideoReady?: (embed: TwitchEmbedInstance) => void
 
-  id: string
+  id?: string
   height?: string | number
   width?: string | number
 }
@@ -41,6 +40,7 @@ const defaultProps: Partial<TwitchEmbedProps> = {
   onVideoPlay: noop,
   onVideoPause: noop,
   onVideoReady: typedNoop<TwitchEmbedInstance>(),
+  id: 'twitch-embed',
   height: DEFAULTS.MEDIA.HEIGHT,
   width: DEFAULTS.MEDIA.WIDTH
 };
@@ -69,9 +69,12 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
   const embed = useRef<TwitchEmbedInstance | null>(null); // TODO: Remove null
 
   const createEmbed = useCallback((EmbedConstructor: TwitchEmbedConstructor) => {
-    document.getElementById(id)!.innerHTML = ''; // TODO: Revise this
+    const divHolder = document.getElementById(id!);
+    if (divHolder) {
+      divHolder.innerHTML = '';
+    }
 
-    const embed = new EmbedConstructor(id, {
+    const embed = new EmbedConstructor(id!, {
       allowfullscreen: allowFullscreen ?? defaultProps.allowFullscreen,
       autoplay: autoplay ?? defaultProps.autoplay,
       channel,
@@ -165,5 +168,7 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
     />
   );
 };
+
+TwitchEmbed.defaultProps = defaultProps;
 
 export default TwitchEmbed;
