@@ -6,7 +6,7 @@ import { typedNoop, typedNoop2 } from '../utils/misc';
 import { objectCompareWithIgnoredKeys } from '../utils/object';
 import { TwitchWindow, TwitchPlayerConstructor, TwitchPlayerInstance, OnPlayData, OnSeekData } from '../types';
 
-export interface TwitchPlayerProps {
+export interface TwitchPlayerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onEnded' | 'onPause' | 'onPlay' | 'onPlaying'> {
   channel?: string
   video?: string
   collection?: string
