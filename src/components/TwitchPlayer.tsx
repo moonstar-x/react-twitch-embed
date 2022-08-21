@@ -56,12 +56,12 @@ const defaultProps: Partial<TwitchPlayerProps> = {
   width: DEFAULTS.MEDIA.WIDTH
 };
 
-const nonRecontructTriggeringProps: (keyof TwitchPlayerProps)[] = ['channel', 'video', 'collection', 'height', 'width'];
+const nonReconstructTriggeringProps: (keyof TwitchPlayerProps)[] = ['channel', 'video', 'collection', 'height', 'width'];
 const shouldReconstructPlayer = (previousProps: TwitchPlayerProps | undefined, props: TwitchPlayerProps): boolean => {
   return objectCompareWithIgnoredKeys(
     previousProps as Record<string, unknown> ?? {},
     props as Record<string, unknown>,
-    nonRecontructTriggeringProps
+    nonReconstructTriggeringProps
   );
 };
 

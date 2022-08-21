@@ -89,3 +89,27 @@ export const MultipleEmbeds = () => {
 };
 
 export const ChannelSmoothSwitching = withNextMediaControls(TwitchEmbed, 'channel', STORYBOOK_DEFAULTS.channels);
+
+// export const Test = () => {
+//   const [props, setProps] = useState({
+//     video: STORYBOOK_DEFAULTS.video,
+//     muted: true
+//   });
+//
+//   const updateProps = () => {
+//     setProps({
+//       video: STORYBOOK_DEFAULTS.videoInCollection,
+//       muted: false
+//     });
+//   };
+//
+//   return (
+//     <div>
+//       <TwitchEmbed {...props} />
+//       <button onClick={updateProps}>UPDATE</button>
+//       <div>
+//         {JSON.stringify(props)}
+//       </div>
+//     </div>
+//   );
+// };
