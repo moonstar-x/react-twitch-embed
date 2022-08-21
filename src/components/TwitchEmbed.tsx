@@ -7,7 +7,6 @@ import { TwitchWindow, TwitchEmbedConstructor, TwitchEmbedInstance, OnPlayData, 
 import { objectCompareWithIgnoredKeys } from '../utils/object';
 
 // TODO: Check default values for every component.
-// TODO: Check if hideControls can work
 export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   channel?: string
   video?: string
@@ -19,6 +18,7 @@ export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   autoplay?: boolean
   muted?: boolean
   time?: string
+  hideControls?: boolean
 
   onAuthenticate?: (embed: TwitchEmbedInstance, data: OnAuthenticateData) => void
   onVideoPlay?: (embed: TwitchEmbedInstance, data: OnPlayData) => void
@@ -37,6 +37,7 @@ const defaultProps: Partial<TwitchEmbedProps> = {
   autoplay: true,
   muted: false,
   time: '0h0m0s',
+  hideControls: false,
   onAuthenticate: typedNoop2<TwitchEmbedInstance, OnAuthenticateData>(),
   onVideoPlay: typedNoop2<TwitchEmbedInstance, OnPlayData>(),
   onVideoPause: typedNoop<TwitchEmbedInstance>(),
@@ -66,6 +67,7 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = (props) => {
     darkMode,
     autoplay,
     muted,
+    hideControls,
 
     onAuthenticate,
     onVideoPlay,
@@ -97,6 +99,7 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = (props) => {
       height: '100%',
       layout: withChat ? 'video-with-chat' : 'video',
       muted,
+      controls: !hideControls,
       parent: typeof parent === 'string' ? [parent] : parent,
       theme: darkMode ? 'dark' : 'light',
       width: '100%'
@@ -117,6 +120,7 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = (props) => {
     darkMode,
     id,
     muted,
+    hideControls,
     onAuthenticate,
     onVideoPause,
     onVideoPlay,

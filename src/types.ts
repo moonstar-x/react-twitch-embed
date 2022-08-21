@@ -132,6 +132,7 @@ export interface TwitchEmbedConstructorOptions {
   height?: string | number
   layout?: 'video-with-chat' | 'video'
   muted?: boolean
+  controls?: boolean
   parent?: string[] | null
   theme?: 'light' | 'dark'
   time?: string

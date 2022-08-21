@@ -77,6 +77,18 @@ FullscreenForbidden.args = {
   allowFullscreen: false
 };
 
+export const ControlsVisible = Template.bind({});
+ControlsVisible.args = {
+  channel: STORYBOOK_DEFAULTS.channel,
+  hideControls: false
+};
+
+export const ControlsHidden = Template.bind({});
+ControlsHidden.args = {
+  channel: STORYBOOK_DEFAULTS.channel,
+  hideControls: true
+};
+
 export const CollectionWithInitialVideo = Template.bind({});
 CollectionWithInitialVideo.args = {
   video: STORYBOOK_DEFAULTS.videoInCollection,
