@@ -1,12 +1,12 @@
 import React from 'react';
+import useHostname from '../hooks/useHostname';
 import { DEFAULTS } from '../constants';
 import { generateUrl, generateUrlDefaultOptions } from '../utils/TwitchChat';
 
-// TODO: Remove parent forced
 export interface TwitchChatProps extends React.HTMLAttributes<HTMLIFrameElement> {
   channel: string
   darkMode?: boolean
-  parent: string | string[]
+  parent?: string | string[]
 
   title?: string
   height?: string | number
@@ -30,7 +30,13 @@ const TwitchChat: React.FC<TwitchChatProps> = ({
   width,
   ...props
 }) => {
-  const chatUrl = generateUrl(channel, parent, {
+  const hostname = useHostname();
+
+  if (!parent && !hostname) {
+    return null;
+  }
+
+  const chatUrl = generateUrl(channel, parent ?? hostname!, {
     darkMode
   });
 
