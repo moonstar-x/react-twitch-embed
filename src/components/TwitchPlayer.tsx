@@ -3,6 +3,7 @@ import useScript from '../hooks/useScript';
 import usePrevious from '../hooks/usePrevious';
 import { DEFAULTS, URLS } from '../constants';
 import { typedNoop, typedNoop2 } from '../utils/misc';
+import { objectCompareWithIgnoredKeys } from '../utils/object';
 import { TwitchWindow, TwitchPlayerConstructor, TwitchPlayerInstance, OnPlayData, OnSeekData } from '../types';
 
 export interface TwitchPlayerProps {
@@ -55,36 +56,47 @@ const defaultProps: Partial<TwitchPlayerProps> = {
   width: DEFAULTS.MEDIA.WIDTH
 };
 
-const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
-  parent,
-  channel,
-  video,
-  collection,
-  autoplay,
-  muted,
-  time,
-  playsInline,
-  allowFullscreen,
-  hideControls,
+const nonRecontructTriggeringProps: (keyof TwitchPlayerProps)[] = ['channel', 'video', 'collection', 'height', 'width'];
+const shouldReconstructPlayer = (previousProps: TwitchPlayerProps | undefined, props: TwitchPlayerProps): boolean => {
+  return objectCompareWithIgnoredKeys(
+    previousProps as Record<string, unknown> ?? {},
+    props as Record<string, unknown>,
+    nonRecontructTriggeringProps
+  );
+};
 
-  onCaptions,
-  onEnded,
-  onPause,
-  onPlay,
-  onPlaybackBlocked,
-  onPlaying,
-  onOffline,
-  onOnline,
-  onReady,
-  onSeek,
+const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
+  const {
+    parent,
+    channel,
+    video,
+    collection,
+    autoplay,
+    muted,
+    time,
+    playsInline,
+    allowFullscreen,
+    hideControls,
 
-  id,
-  height,
-  width,
-  ...props
-}) => {
+    onCaptions,
+    onEnded,
+    onPause,
+    onPlay,
+    onPlaybackBlocked,
+    onPlaying,
+    onOffline,
+    onOnline,
+    onReady,
+    onSeek,
+
+    id,
+    height,
+    width,
+    ...restOfProps
+  } = props;
+
   const { loading, error } = useScript(URLS.TWITCH_PLAYER_URL);
-  const previousMedia = usePrevious({ channel, video, collection });
+  const previousProps = usePrevious(props);
   const player = useRef<TwitchPlayerInstance>();
 
   const createPlayer = useCallback((Player: TwitchPlayerConstructor) => {
@@ -154,40 +166,23 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
       return;
     }
 
-    // TODO: Multiple props updating containing channel might cause the others to be ignored.
-    if (player.current) {
-      let somethingChanged = false;
-
-      if (channel && previousMedia?.channel !== channel) {
-        player.current!.setChannel(channel);
-        somethingChanged = true;
-      }
-
-      if (video && previousMedia?.video !== video) {
-        player.current!.setVideo(video, 0);
-        somethingChanged = true;
-      }
-
-      if (collection && previousMedia?.collection !== collection) {
-        player.current!.setCollection(collection, video);
-        somethingChanged = true;
-      }
-
-      if (somethingChanged) {
-        return;
-      }
+    if (!player.current || shouldReconstructPlayer(previousProps, props)) {
+      player.current = createPlayer((window as TwitchWindow).Twitch!.Player!);
+      return;
     }
 
-    player.current = createPlayer((window as TwitchWindow).Twitch!.Player!);
-  }, [
-    channel,
-    collection,
-    createPlayer,
-    error,
-    loading,
-    previousMedia,
-    video
-  ]);
+    if (channel && previousProps?.channel !== channel) {
+      player.current!.setChannel(channel);
+    }
+
+    if (video && previousProps?.video !== video) {
+      player.current!.setVideo(video, 0);
+    }
+
+    if (collection && previousProps?.collection !== collection) {
+      player.current!.setCollection(collection, video);
+    }
+  }, [channel, collection, createPlayer, error, loading, previousProps, props, video]);
 
   return (
     <div
@@ -196,7 +191,7 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
         height,
         width
       }}
-      {...props}
+      {...restOfProps}
     />
   );
 };
