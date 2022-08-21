@@ -163,14 +163,13 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
         somethingChanged = true;
       }
 
-      // TODO: Check video setting with v.
       if (video && previousMedia?.video !== video) {
-        player.current!.setVideo(`v${video}`, 0);
+        player.current!.setVideo(video, 0);
         somethingChanged = true;
       }
 
       if (collection && previousMedia?.collection !== collection) {
-        player.current!.setCollection(collection, video ? `v${video}` : undefined);
+        player.current!.setCollection(collection, video);
         somethingChanged = true;
       }
 
