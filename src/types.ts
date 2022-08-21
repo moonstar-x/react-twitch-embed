@@ -1,6 +1,3 @@
-// TODO: Improve these types
-// TODO: Export all of these
-
 export interface OnPlayData {
   sessionId: string
 }
@@ -89,18 +86,18 @@ export interface TwitchPlayerInstance extends EventTarget {
 }
 
 export interface TwitchPlayerConstructorOptions {
-  channel?: string
-  video?: string
-  collection?: string
-  height?: string | number
-  parent?: string[]
-  width?: string | number
-  autoplay?: boolean
-  muted?: boolean
-  time?: string
-  playsinline?: boolean
   allowfullscreen?: boolean
+  autoplay?: boolean
+  channel?: string
+  collection?: string
   controls?: boolean
+  height?: string | number
+  muted?: boolean
+  parent?: string[]
+  playsinline?: boolean
+  time?: string
+  video?: string
+  width?: string | number
 }
 
 export interface TwitchPlayerConstructor {
@@ -127,10 +124,10 @@ export interface TwitchEmbedConstructorOptions {
   autoplay?: boolean
   channel?: string
   collection?: string
+  controls?: boolean
   height?: string | number
   layout?: 'video-with-chat' | 'video'
   muted?: boolean
-  controls?: boolean
   parent?: string[] | null
   theme?: 'light' | 'dark'
   time?: string

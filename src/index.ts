@@ -9,11 +9,19 @@ import usePrevious from './hooks/usePrevious';
 import useHostname from './hooks/useHostname';
 
 import {
-  TwitchWindow,
-  TwitchEmbedConstructor,
-  TwitchEmbedConstructorOptions,
+  OnPlayData,
+  OnSeekData,
+  OnAuthenticateData,
+  PlayerQuality,
+  PlaybackStats,
+  PlayerState,
+  TwitchPlayerInstance,
+  TwitchPlayerConstructorOptions,
+  TwitchPlayerConstructor,
   TwitchEmbedInstance,
-  TwitchPlayerInstance
+  TwitchEmbedConstructorOptions,
+  TwitchEmbedConstructor,
+  TwitchWindow
 } from './types';
 
 export {
@@ -33,9 +41,17 @@ export {
   usePrevious,
   useHostname,
 
-  TwitchWindow,
-  TwitchEmbedConstructor,
-  TwitchEmbedConstructorOptions,
+  OnPlayData,
+  OnSeekData,
+  OnAuthenticateData,
+  PlayerQuality,
+  PlaybackStats,
+  PlayerState,
+  TwitchPlayerInstance,
+  TwitchPlayerConstructorOptions,
+  TwitchPlayerConstructor,
   TwitchEmbedInstance,
-  TwitchPlayerInstance
+  TwitchEmbedConstructorOptions,
+  TwitchEmbedConstructor,
+  TwitchWindow
 };
