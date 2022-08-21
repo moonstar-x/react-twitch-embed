@@ -96,27 +96,3 @@ export const ChannelSmoothSwitching = withNextMediaControls(TwitchEmbed, 'channe
 export const VideosSmoothSwitching = withNextMediaControls(TwitchEmbed, 'video', STORYBOOK_DEFAULTS.videos);
 export const CollectionsSmoothSwitching = withNextMediaControls(TwitchEmbed, 'collection', STORYBOOK_DEFAULTS.collections);
 export const ControlledFromOutside = withVideoControls(TwitchEmbed, STORYBOOK_DEFAULTS.video, 'onVideoReady');
-
-// export const Test = () => {
-//   const [props, setProps] = useState({
-//     video: STORYBOOK_DEFAULTS.video,
-//     muted: true
-//   });
-//
-//   const updateProps = () => {
-//     setProps({
-//       video: STORYBOOK_DEFAULTS.videoInCollection,
-//       muted: false
-//     });
-//   };
-//
-//   return (
-//     <div>
-//       <TwitchEmbed {...props} />
-//       <button onClick={updateProps}>UPDATE</button>
-//       <div>
-//         {JSON.stringify(props)}
-//       </div>
-//     </div>
-//   );
-// };
