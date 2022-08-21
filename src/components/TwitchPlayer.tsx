@@ -3,8 +3,9 @@ import useScript from '../hooks/useScript';
 import usePrevious from '../hooks/usePrevious';
 import { DEFAULTS, URLS } from '../constants';
 import { typedNoop, typedNoop2 } from '../utils/misc';
-import { objectCompareWithIgnoredKeys } from '../utils/object';
 import { TwitchWindow, TwitchPlayerConstructor, TwitchPlayerInstance, OnPlayData, OnSeekData } from '../types';
+import { objectCompareWithIgnoredKeys } from '../utils/object';
+import { clearElementById } from '../utils/document';
 
 export interface TwitchPlayerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onEnded' | 'onPause' | 'onPlay' | 'onPlaying'> {
   channel?: string
@@ -100,10 +101,7 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
   const player = useRef<TwitchPlayerInstance>();
 
   const createPlayer = useCallback((Player: TwitchPlayerConstructor) => {
-    const divHolder = document.getElementById(id!);
-    if (divHolder) {
-      divHolder.innerHTML = '';
-    }
+    clearElementById(id!);
 
     const player = new Player(id!, {
       channel,

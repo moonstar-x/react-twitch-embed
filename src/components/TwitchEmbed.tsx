@@ -5,6 +5,7 @@ import { DEFAULTS, URLS } from '../constants';
 import { typedNoop, typedNoop2 } from '../utils/misc';
 import { TwitchWindow, TwitchEmbedConstructor, TwitchEmbedInstance, OnPlayData, OnAuthenticateData } from '../types';
 import { objectCompareWithIgnoredKeys } from '../utils/object';
+import { clearElementById } from '../utils/document';
 
 export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   allowFullscreen?: boolean
@@ -86,10 +87,7 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = (props) => {
   const embed = useRef<TwitchEmbedInstance>();
 
   const createEmbed = useCallback((EmbedConstructor: TwitchEmbedConstructor) => {
-    const divHolder = document.getElementById(id!);
-    if (divHolder) {
-      divHolder.innerHTML = '';
-    }
+    clearElementById(id!);
 
     const embed = new EmbedConstructor(id!, {
       allowfullscreen: allowFullscreen,
