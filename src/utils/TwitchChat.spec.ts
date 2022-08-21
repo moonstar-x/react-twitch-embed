@@ -43,7 +43,7 @@ describe('Utils -> TwitchChat', () => {
     it('should return a string with all the default options if no options are provided.', () => {
       const url = generateUrl(channel, parent);
 
-      expect(url).not.toContain('?darkpopout&');
+      expect(url).toContain('?darkpopout&');
     });
   });
 });

@@ -53,7 +53,7 @@ describe('Utils -> TwitchClip', () => {
     it('should return a string with all the default options if no options are provided.', () => {
       const url = generateUrl(clip, parent);
 
-      expect(url).toContain('autoplay=false');
+      expect(url).toContain('autoplay=true');
       expect(url).toContain('muted=false');
     });
   });
