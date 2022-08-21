@@ -9,13 +9,18 @@ export interface TwitchClipProps extends React.HTMLAttributes<HTMLIFrameElement>
   muted?: boolean
   parent: string | string[]
 
+  title?: string
   height?: string | number
   width?: string | number
 }
 
-// TODO: Create defaultProps.
-// TODO: Use Component.defaultProps instead of constant ??.
-
+const defaultProps: Partial<TwitchClipProps> = {
+  autoplay: generateUrlDefaultOptions.autoplay,
+  muted: generateUrlDefaultOptions.muted,
+  title: 'TwitchClip',
+  height: DEFAULTS.MEDIA.HEIGHT,
+  width: DEFAULTS.MEDIA.WIDTH
+};
 
 const TwitchClip: React.FC<TwitchClipProps> = ({
   clip,
@@ -29,20 +34,22 @@ const TwitchClip: React.FC<TwitchClipProps> = ({
   ...props
 }) => {
   const clipUrl = generateUrl(clip, parent, {
-    autoplay: autoplay ?? generateUrlDefaultOptions.autoplay,
-    muted: muted ?? generateUrlDefaultOptions.muted,
+    autoplay,
+    muted
   });
 
   return (
     <iframe
-      title={title ?? 'TwitchClip'}
-      height={height ?? DEFAULTS.MEDIA.HEIGHT}
-      width={width ?? DEFAULTS.MEDIA.WIDTH}
+      title={title}
+      height={height}
+      width={width}
       src={clipUrl}
       frameBorder={0}
       {...props}
     />
   );
 };
+
+TwitchClip.defaultProps = defaultProps;
 
 export default TwitchClip;
