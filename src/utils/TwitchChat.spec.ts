@@ -26,16 +26,6 @@ describe('Utils -> TwitchChat', () => {
       expect(url).not.toContain('?darkpopout&');
     });
 
-    it('should return a string with migration true if enabled.', () => {
-      const url = generateUrl(channel, parent, { enableMigration: true });
-      expect(url).toContain('migration=true');
-    });
-
-    it('should return a string with migration false if disabled.', () => {
-      const url = generateUrl(channel, parent, { enableMigration: false });
-      expect(url).toContain('migration=false');
-    });
-
     it('should return a string with a single parent if parent is a string.', () => {
       const url = generateUrl(channel, 'localhost');
       expect(url).toContain('parent=localhost');
@@ -54,7 +44,6 @@ describe('Utils -> TwitchChat', () => {
       const url = generateUrl(channel, parent);
 
       expect(url).not.toContain('?darkpopout&');
-      expect(url).toContain('migration=true');
     });
   });
 });
