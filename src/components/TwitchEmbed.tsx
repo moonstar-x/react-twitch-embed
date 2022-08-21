@@ -55,6 +55,7 @@ const shouldReconstructEmbed = (previousProps: TwitchEmbedProps | undefined, pro
   );
 };
 
+// TODO: Clear player on onMount
 const TwitchEmbed: React.FC<TwitchEmbedProps> = (props) => {
   const {
     allowFullscreen,
