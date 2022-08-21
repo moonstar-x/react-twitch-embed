@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { TwitchPlayerInstance, TwitchEmbedInstance } from '../../types';
+import { TwitchPlayerInstance } from '../../types';
 
 const withVideoControls = <P extends object>(
   Component: React.ComponentType<P>,
@@ -21,12 +21,7 @@ const withVideoControls = <P extends object>(
       player.current?.setVolume(parseFloat(e.currentTarget.value));
     };
 
-    const handleReady = (obj: TwitchPlayerInstance | TwitchEmbedInstance) => {
-      if ('getPlayer' in obj) {
-        player.current = obj.getPlayer();
-        return;
-      }
-
+    const handleReady = (obj: TwitchPlayerInstance) => {
       player.current = obj;
     };
 

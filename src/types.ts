@@ -118,10 +118,8 @@ export interface TwitchPlayerConstructor {
   SEEK: string
 }
 
-export interface TwitchEmbedInstance extends EventTarget {
+export interface TwitchEmbedInstance extends TwitchPlayerInstance {
   getPlayer: () => TwitchPlayerInstance
-
-  addEventListener: (event: string, callback: (...args: any[]) => void) => void
 }
 
 export interface TwitchEmbedConstructorOptions {
