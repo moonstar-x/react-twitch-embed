@@ -9,7 +9,7 @@ import { TwitchWindow, TwitchEmbedConstructor, TwitchEmbedInstance } from '../ty
 // TODO: Events should expose embed.
 export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   channel: string
-  parent?: string | string[] | null
+  parent?: string | string[]
   allowFullscreen?: boolean
   withChat?: boolean
   darkMode?: boolean
@@ -26,11 +26,9 @@ export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string | number
 }
 
-// TODO: Remove the parent default
 // TODO: Use Component.defaultProps instead of constant ??.
 
 const defaultProps: Partial<TwitchEmbedProps> = {
-  parent: null,
   allowFullscreen: true,
   withChat: true,
   darkMode: true,
