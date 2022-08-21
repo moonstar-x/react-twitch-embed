@@ -4,9 +4,7 @@ import { Story } from '@storybook/react';
 import TwitchEmbed, { TwitchEmbedProps } from '../components/TwitchEmbed';
 import { STORYBOOK_DEFAULTS } from '../constants';
 import withNextMediaControls from './helpers/withNextMediaControls';
-
-// TODO: Add component controlled player.
-// TODO: Add stories for other media.
+import withVideoControls from './helpers/withVideoControls';
 
 export default {
   title: 'TwitchEmbed',
@@ -45,25 +43,25 @@ DarkModeNoChat.args = {
 
 export const WithAutoplay = Template.bind({});
 WithAutoplay.args = {
-  channel: STORYBOOK_DEFAULTS.channel,
+  video: STORYBOOK_DEFAULTS.video,
   autoplay: true
 };
 
 export const NoAutoplay = Template.bind({});
 NoAutoplay.args = {
-  channel: STORYBOOK_DEFAULTS.channel,
+  video: STORYBOOK_DEFAULTS.video,
   autoplay: false
 };
 
 export const Muted = Template.bind({});
 Muted.args = {
-  channel: STORYBOOK_DEFAULTS.channel,
+  video: STORYBOOK_DEFAULTS.video,
   muted: true
 };
 
 export const NotMuted = Template.bind({});
 NotMuted.args = {
-  channel: STORYBOOK_DEFAULTS.channel,
+  video: STORYBOOK_DEFAULTS.video,
   muted: false
 };
 
@@ -79,6 +77,12 @@ FullscreenForbidden.args = {
   allowFullscreen: false
 };
 
+export const CollectionWithInitialVideo = Template.bind({});
+CollectionWithInitialVideo.args = {
+  video: STORYBOOK_DEFAULTS.videoInCollection,
+  collection: STORYBOOK_DEFAULTS.collection
+};
+
 export const MultipleEmbeds = () => {
   return (
     <Fragment>
@@ -89,6 +93,9 @@ export const MultipleEmbeds = () => {
 };
 
 export const ChannelSmoothSwitching = withNextMediaControls(TwitchEmbed, 'channel', STORYBOOK_DEFAULTS.channels);
+export const VideosSmoothSwitching = withNextMediaControls(TwitchEmbed, 'video', STORYBOOK_DEFAULTS.videos);
+export const CollectionsSmoothSwitching = withNextMediaControls(TwitchEmbed, 'collection', STORYBOOK_DEFAULTS.collections);
+export const ControlledFromOutside = withVideoControls(TwitchEmbed, STORYBOOK_DEFAULTS.video, 'onVideoReady');
 
 // export const Test = () => {
 //   const [props, setProps] = useState({
