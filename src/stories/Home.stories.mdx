@@ -1,3 +1,7 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Home" />
+
 [![npm version](https://img.shields.io/npm/v/react-twitch-embed.svg)](https://www.npmjs.com/package/react-twitch-embed)
 [![npm downloads](https://badgen.net/npm/dt/react-twitch-embed)](https://www.npmjs.com/package/react-twitch-embed)
 [![bundle size](https://badgen.net/bundlephobia/minzip/react-twitch-embed)](https://bundlephobia.com/result?p=react-twitch-embed)
@@ -13,6 +17,7 @@ For more information, visit the [Embedding Twitch](https://dev.twitch.tv/docs/em
 Make sure to check out the [Demo and Documentation](https://docs.moonstar-x.dev/react-twitch-embed) page for more information on the usage of the components,
 alongside a description on all the supported props for each component.
 
+
 ## Installation
 
 ```bash
@@ -25,7 +30,7 @@ This package includes some typings for the `Embed` and `Player` constructors tha
 into the browser's `window` object. These are unofficial typings that I made empirically, some of them might not be accurate.
 
 The documentation on Twitch's official page is incomplete in various aspects, and a lot of the functionality included
-in this package was found by arbitrarily and through trial and error.
+in this package was found by arbitrarily and through trial and error. 
 
 If you find any inconsistency with the typings provided by this package, feel free to open a
 [Pull Request](https://github.com/moonstar-x/react-twitch-embed).
@@ -46,7 +51,7 @@ As such, you shouldn't need to specify this prop for any of the components, unle
 > efficiently when their `channel`, `video`, or `collection` props change by using the internal API instead of recreating the embed
 > when they change. The key difference is that `TwitchEmbed` can include the live chat on streams. At the end of the day, it depends
 > on which one you prefer.
->
+> 
 > As for `TwitchPlayerNonInteractive`, this component can embed streams, VODs and collections too, but it does not include an internal
 > API. This means that channel, video or collection switching is not "smooth" and will recreate the embed. However, this component does
 > not download anything extra, it does not create any additional nodes on the body document, so it is probably less resource heavy.
