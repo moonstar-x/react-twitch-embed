@@ -1,13 +1,13 @@
 import React from 'react';
+import useHostname from '../hooks/useHostname';
 import { DEFAULTS } from '../constants';
 import { generateUrl, generateUrlDefaultOptions } from '../utils/TwitchClip';
 
-// TODO: Remove parent forced
 export interface TwitchClipProps extends React.HTMLAttributes<HTMLIFrameElement> {
   clip: string
   autoplay?: boolean
   muted?: boolean
-  parent: string | string[]
+  parent?: string | string[]
 
   title?: string
   height?: string | number
@@ -33,7 +33,13 @@ const TwitchClip: React.FC<TwitchClipProps> = ({
   width,
   ...props
 }) => {
-  const clipUrl = generateUrl(clip, parent, {
+  const hostname = useHostname();
+
+  if (!parent && !hostname) {
+    return null;
+  }
+
+  const clipUrl = generateUrl(clip, parent ?? hostname!, {
     autoplay,
     muted
   });

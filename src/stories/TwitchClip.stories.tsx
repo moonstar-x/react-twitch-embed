@@ -13,27 +13,23 @@ const Template: Story<TwitchClipProps> = (args) => <TwitchClip {...args} />;
 export const WithAutoplay = Template.bind({});
 WithAutoplay.args = {
   clip: STORYBOOK_DEFAULTS.clips[0],
-  parent: window.location.hostname,
   autoplay: true
 };
 
 export const NoAutoplay = Template.bind({});
 NoAutoplay.args = {
   clip: STORYBOOK_DEFAULTS.clips[0],
-  parent: window.location.hostname,
   autoplay: false
 };
 
 export const Muted = Template.bind({});
 Muted.args = {
   clip: STORYBOOK_DEFAULTS.clips[1],
-  parent: window.location.hostname,
   muted: true
 };
 
 export const NotMuted = Template.bind({});
 NotMuted.args = {
   clip: STORYBOOK_DEFAULTS.clips[1],
-  parent: window.location.hostname,
   muted: false
 };
