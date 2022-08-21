@@ -4,16 +4,21 @@ import usePrevious from '../hooks/usePrevious';
 import { DEFAULTS, URLS } from '../constants';
 import { typedNoop, typedNoop2 } from '../utils/misc';
 import { TwitchWindow, TwitchEmbedConstructor, TwitchEmbedInstance, OnPlayData, OnAuthenticateData } from '../types';
+import { objectCompareWithIgnoredKeys } from '../utils/object';
 
-// TODO: Revise functionality for video and collection
+// TODO: Check default values for every component.
+// TODO: Check if hideControls can work
 export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
-  channel: string
+  channel?: string
+  video?: string
+  collection?: string
   parent?: string | string[]
   allowFullscreen?: boolean
   withChat?: boolean
   darkMode?: boolean
   autoplay?: boolean
   muted?: boolean
+  time?: string
 
   onAuthenticate?: (embed: TwitchEmbedInstance, data: OnAuthenticateData) => void
   onVideoPlay?: (embed: TwitchEmbedInstance, data: OnPlayData) => void
@@ -31,6 +36,7 @@ const defaultProps: Partial<TwitchEmbedProps> = {
   darkMode: true,
   autoplay: true,
   muted: false,
+  time: '0h0m0s',
   onAuthenticate: typedNoop2<TwitchEmbedInstance, OnAuthenticateData>(),
   onVideoPlay: typedNoop2<TwitchEmbedInstance, OnPlayData>(),
   onVideoPause: typedNoop<TwitchEmbedInstance>(),
@@ -40,27 +46,40 @@ const defaultProps: Partial<TwitchEmbedProps> = {
   width: DEFAULTS.MEDIA.WIDTH
 };
 
-const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
-  channel,
-  parent,
-  allowFullscreen,
-  withChat,
-  darkMode,
-  autoplay,
-  muted,
+const nonReconstructTriggeringProps: (keyof TwitchEmbedProps)[] = ['channel', 'video', 'collection', 'height', 'width'];
+const shouldReconstructEmbed = (previousProps: TwitchEmbedProps | undefined, props: TwitchEmbedProps): boolean => {
+  return objectCompareWithIgnoredKeys(
+    previousProps as Record<string, unknown> ?? {},
+    props as Record<string, unknown>,
+    nonReconstructTriggeringProps
+  );
+};
 
-  onAuthenticate,
-  onVideoPlay,
-  onVideoPause,
-  onVideoReady,
+const TwitchEmbed: React.FC<TwitchEmbedProps> = (props) => {
+  const {
+    channel,
+    video,
+    collection,
+    parent,
+    allowFullscreen,
+    withChat,
+    darkMode,
+    autoplay,
+    muted,
 
-  id,
-  height,
-  width,
-  ...props
-}) => {
+    onAuthenticate,
+    onVideoPlay,
+    onVideoPause,
+    onVideoReady,
+
+    id,
+    height,
+    width,
+    ...restOfProps
+  } = props;
+
   const { loading, error } = useScript(URLS.TWITCH_EMBED_URL);
-  const previousChannel = usePrevious(channel);
+  const previousProps = usePrevious(props);
   const embed = useRef<TwitchEmbedInstance>();
 
   const createEmbed = useCallback((EmbedConstructor: TwitchEmbedConstructor) => {
@@ -73,6 +92,8 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
       allowfullscreen: allowFullscreen,
       autoplay,
       channel,
+      collection,
+      video,
       height: '100%',
       layout: withChat ? 'video-with-chat' : 'video',
       muted,
@@ -91,6 +112,8 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
     allowFullscreen,
     autoplay,
     channel,
+    video,
+    collection,
     darkMode,
     id,
     muted,
@@ -112,29 +135,23 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
       return;
     }
 
-    // TODO: Multiple props updating containing channel might cause the others to be ignored.
-    if (embed.current && previousChannel !== channel) {
-      embed.current.getPlayer().setChannel(channel);
+    if (!embed.current || shouldReconstructEmbed(previousProps, props)) {
+      embed.current = createEmbed((window as TwitchWindow).Twitch!.Embed!);
       return;
     }
 
-    embed.current = createEmbed((window as TwitchWindow).Twitch!.Embed!);
-  }, [
-    loading,
-    error,
-    createEmbed,
-    allowFullscreen,
-    darkMode,
-    id,
-    onAuthenticate,
-    onVideoPause,
-    onVideoPlay,
-    onVideoReady,
-    parent,
-    withChat,
-    channel,
-    previousChannel
-  ]);
+    if (channel && previousProps?.channel !== channel) {
+      embed.current!.getPlayer().setChannel(channel);
+    }
+
+    if (video && previousProps?.video !== video) {
+      embed.current!.getPlayer().setVideo(video, 0);
+    }
+
+    if (collection && previousProps?.collection !== collection) {
+      embed.current!.getPlayer().setCollection(collection, video);
+    }
+  }, [channel, collection, createEmbed, error, loading, previousProps, props, video]);
 
   if (loading) {
     return null;
@@ -147,7 +164,7 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
         height,
         width
       }}
-      {...props}
+      {...restOfProps}
     />
   );
 };
