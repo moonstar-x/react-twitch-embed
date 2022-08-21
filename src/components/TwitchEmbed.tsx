@@ -137,15 +137,6 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
     previousChannel
   ]);
 
-  // TODO: Remove this efefct.
-  useEffect(() => {
-    if (!embed || !embed.current || !channel) {
-      return;
-    }
-
-    embed.current.getPlayer().setChannel(channel);
-  }, [embed, channel]);
-
   if (loading) {
     return null;
   }
