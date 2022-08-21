@@ -44,12 +44,12 @@ describe('Components -> TwitchPlayer', () => {
   it('should call setCollection when updating the collection and video prop.', () => {
     const { rerender } = render(<TwitchPlayer collection={channel} id={id} />);
     rerender(<TwitchPlayer collection="new_collection" video="new_video" id={id} />);
-    expect(setCollectionMock).toHaveBeenCalledWith('new_collection', 'vnew_video');
+    expect(setCollectionMock).toHaveBeenCalledWith('new_collection', 'new_video');
   });
 
   it('should call setVideo when updating the video prop.', () => {
     const { rerender } = render(<TwitchPlayer video={channel} id={id} />);
     rerender(<TwitchPlayer video="new_video" id={id} />);
-    expect(setVideoMock).toHaveBeenCalledWith('vnew_video', 0);
+    expect(setVideoMock).toHaveBeenCalledWith('new_video', 0);
   });
 });
