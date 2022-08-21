@@ -3,7 +3,8 @@ import { TwitchPlayerInstance, TwitchEmbedInstance } from '../../types';
 
 const withVideoControls = <P extends object>(
   Component: React.ComponentType<P>,
-  video: string
+  video: string,
+  readyEventName: string
 ) => {
   return () => {
     const player = useRef<TwitchPlayerInstance>();
@@ -30,7 +31,7 @@ const withVideoControls = <P extends object>(
     };
 
     const props = {
-      onReady: handleReady,
+      [readyEventName]: handleReady,
       video
     };
 

@@ -17,7 +17,7 @@ const MockComponent: React.FC<{ onReady: (p: TwitchPlayerInstance) => void }> = 
 };
 
 describe('Stories -> Helpers -> withVideoControls()', () => {
-  const TestComponent = withVideoControls(MockComponent, 'video');
+  const TestComponent = withVideoControls(MockComponent, 'video', 'onReady');
 
   beforeEach(() => {
     playMock.mockClear();
