@@ -62,7 +62,7 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
 }) => {
   const { loading, error } = useScript(URLS.TWITCH_EMBED_URL);
   const previousChannel = usePrevious(channel);
-  const embed = useRef<TwitchEmbedInstance | null>(null); // TODO: Remove null
+  const embed = useRef<TwitchEmbedInstance>();
 
   const createEmbed = useCallback((EmbedConstructor: TwitchEmbedConstructor) => {
     const divHolder = document.getElementById(id!);
