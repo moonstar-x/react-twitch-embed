@@ -9,7 +9,7 @@
   "jsnext:main": "dist/index.es.js",
   "scripts": {
     "storybook:serve": "start-storybook -p 6006",
-    "storyboox:build": "build-storybook",
+    "storybook:build": "build-storybook -o docs-build",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "test": "jest",
