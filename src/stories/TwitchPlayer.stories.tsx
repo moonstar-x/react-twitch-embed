@@ -4,8 +4,7 @@ import { Story } from '@storybook/react';
 import TwitchPlayer, { TwitchPlayerProps } from '../components/TwitchPlayer';
 import { STORYBOOK_DEFAULTS } from '../constants';
 import withNextMediaControls from './helpers/withNextMediaControls';
-
-// TODO: Add component controlled player.
+import withVideoControls from './helpers/withVideoControls';
 
 export default {
   title: 'TwitchPlayer',
@@ -71,3 +70,4 @@ CollectionWithInitialVideo.args = {
 export const ChannelSmoothSwitching = withNextMediaControls(TwitchPlayer, 'channel', STORYBOOK_DEFAULTS.channels);
 export const VideosSmoothSwitching = withNextMediaControls(TwitchPlayer, 'video', STORYBOOK_DEFAULTS.videos);
 export const CollectionsSmoothSwitching = withNextMediaControls(TwitchPlayer, 'collection', STORYBOOK_DEFAULTS.collections);
+export const ControlledFromOutside = withVideoControls(TwitchPlayer, STORYBOOK_DEFAULTS.video);
