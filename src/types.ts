@@ -9,6 +9,12 @@ export interface OnSeekData {
   position: number
 }
 
+export interface OnAuthenticateData {
+  displayName: string
+  id: string
+  profileImageURL: string
+}
+
 export interface PlayerQuality {
   bitrate: number
   codecs: string
@@ -114,6 +120,8 @@ export interface TwitchPlayerConstructor {
 
 export interface TwitchEmbedInstance extends EventTarget {
   getPlayer: () => TwitchPlayerInstance
+
+  addEventListener: (event: string, callback: (...args: any[]) => void) => void
 }
 
 export interface TwitchEmbedConstructorOptions {

@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import useScript from '../hooks/useScript';
 import usePrevious from '../hooks/usePrevious';
 import { DEFAULTS, URLS } from '../constants';
-import { noop, typedNoop } from '../utils/misc';
-import { TwitchWindow, TwitchEmbedConstructor, TwitchEmbedInstance } from '../types';
+import { typedNoop, typedNoop2 } from '../utils/misc';
+import { TwitchWindow, TwitchEmbedConstructor, TwitchEmbedInstance, OnPlayData, OnAuthenticateData } from '../types';
 
 // TODO: Revise functionality for video and collection
-// TODO: Events should expose embed.
 export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   channel: string
   parent?: string | string[]
@@ -16,9 +15,9 @@ export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   autoplay?: boolean
   muted?: boolean
 
-  onAuthenticate?: () => void
-  onVideoPlay?: () => void
-  onVideoPause?: () => void
+  onAuthenticate?: (embed: TwitchEmbedInstance, data: OnAuthenticateData) => void
+  onVideoPlay?: (embed: TwitchEmbedInstance, data: OnPlayData) => void
+  onVideoPause?: (embed: TwitchEmbedInstance) => void
   onVideoReady?: (embed: TwitchEmbedInstance) => void
 
   id?: string
@@ -32,9 +31,9 @@ const defaultProps: Partial<TwitchEmbedProps> = {
   darkMode: true,
   autoplay: true,
   muted: false,
-  onAuthenticate: noop,
-  onVideoPlay: noop,
-  onVideoPause: noop,
+  onAuthenticate: typedNoop2<TwitchEmbedInstance, OnAuthenticateData>(),
+  onVideoPlay: typedNoop2<TwitchEmbedInstance, OnPlayData>(),
+  onVideoPause: typedNoop<TwitchEmbedInstance>(),
   onVideoReady: typedNoop<TwitchEmbedInstance>(),
   id: 'twitch-embed',
   height: DEFAULTS.MEDIA.HEIGHT,
@@ -82,9 +81,9 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
       width: '100%'
     });
 
-    embed.addEventListener(EmbedConstructor.AUTHENTICATE, onAuthenticate!);
-    embed.addEventListener(EmbedConstructor.VIDEO_PLAY, onVideoPlay!);
-    embed.addEventListener(EmbedConstructor.VIDEO_PAUSE, onVideoPause!);
+    embed.addEventListener(EmbedConstructor.AUTHENTICATE, (data: OnAuthenticateData) => onAuthenticate!(embed, data));
+    embed.addEventListener(EmbedConstructor.VIDEO_PLAY, (data: OnPlayData) => onVideoPlay!(embed, data));
+    embed.addEventListener(EmbedConstructor.VIDEO_PAUSE, () => onVideoPause!(embed));
     embed.addEventListener(EmbedConstructor.VIDEO_READY, () => onVideoReady!(embed));
 
     return embed;
