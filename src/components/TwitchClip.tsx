@@ -2,13 +2,12 @@ import React from 'react';
 import { DEFAULTS } from '../constants';
 import { generateUrl, generateUrlDefaultOptions } from '../utils/TwitchClip';
 
-// TODO: Remove parent forced and enableMigration
+// TODO: Remove parent forced
 export interface TwitchClipProps extends React.HTMLAttributes<HTMLIFrameElement> {
   clip: string
   autoplay?: boolean
   muted?: boolean
   parent: string | string[]
-  enableMigration?: boolean
 
   height?: string | number
   width?: string | number
@@ -23,7 +22,6 @@ const TwitchClip: React.FC<TwitchClipProps> = ({
   autoplay,
   muted,
   parent,
-  enableMigration,
 
   title,
   height,
@@ -33,7 +31,6 @@ const TwitchClip: React.FC<TwitchClipProps> = ({
   const clipUrl = generateUrl(clip, parent, {
     autoplay: autoplay ?? generateUrlDefaultOptions.autoplay,
     muted: muted ?? generateUrlDefaultOptions.muted,
-    enableMigration: enableMigration ?? generateUrlDefaultOptions.enableMigration
   });
 
   return (

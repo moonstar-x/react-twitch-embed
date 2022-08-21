@@ -2,14 +2,12 @@ import { URLS } from '../constants';
 
 export interface TwitchClipGenerateUrlOptions {
   autoplay?: boolean
-  muted?: boolean,
-  enableMigration?: boolean
+  muted?: boolean
 }
 
 export const generateUrlDefaultOptions: TwitchClipGenerateUrlOptions = {
   autoplay: false,
-  muted: false,
-  enableMigration: true
+  muted: false
 };
 
 export const generateUrl = (
@@ -23,7 +21,6 @@ export const generateUrl = (
 
   params.append('autoplay', fullOptions.autoplay!.toString());
   params.append('muted', fullOptions.muted!.toString());
-  params.append('migration', fullOptions.enableMigration!.toString());
 
   if (Array.isArray(parent)) {
     parent.forEach((parent) => params.append('parent', parent));

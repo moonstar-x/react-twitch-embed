@@ -36,16 +36,6 @@ describe('Utils -> TwitchClip', () => {
       expect(url).toContain('muted=false');
     });
 
-    it('should return a string with migration true if enabled.', () => {
-      const url = generateUrl(clip, parent, { enableMigration: true });
-      expect(url).toContain('migration=true');
-    });
-
-    it('should return a string with migration false if disabled.', () => {
-      const url = generateUrl(clip, parent, { enableMigration: false });
-      expect(url).toContain('migration=false');
-    });
-
     it('should return a string with a single parent if parent is a string.', () => {
       const url = generateUrl(clip, 'localhost');
       expect(url).toContain('parent=localhost');
@@ -65,7 +55,6 @@ describe('Utils -> TwitchClip', () => {
 
       expect(url).toContain('autoplay=false');
       expect(url).toContain('muted=false');
-      expect(url).toContain('migration=true');
     });
   });
 });
