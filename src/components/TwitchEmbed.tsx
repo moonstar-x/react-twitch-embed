@@ -26,8 +26,6 @@ export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string | number
 }
 
-// TODO: Use Component.defaultProps instead of constant ??.
-
 const defaultProps: Partial<TwitchEmbedProps> = {
   allowFullscreen: true,
   withChat: true,
@@ -73,24 +71,21 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
     }
 
     const embed = new EmbedConstructor(id!, {
-      allowfullscreen: allowFullscreen ?? defaultProps.allowFullscreen,
-      autoplay: autoplay ?? defaultProps.autoplay,
+      allowfullscreen: allowFullscreen,
+      autoplay,
       channel,
       height: '100%',
       layout: withChat ? 'video-with-chat' : 'video',
-      muted: muted ?? defaultProps.muted,
+      muted,
       parent: typeof parent === 'string' ? [parent] : parent,
       theme: darkMode ? 'dark' : 'light',
       width: '100%'
     });
 
-    embed.addEventListener(EmbedConstructor.AUTHENTICATE, onAuthenticate ?? defaultProps.onAuthenticate!);
-    embed.addEventListener(EmbedConstructor.VIDEO_PLAY, onVideoPlay ?? defaultProps.onVideoPlay!);
-    embed.addEventListener(EmbedConstructor.VIDEO_PAUSE, onVideoPause ?? defaultProps.onVideoPause!);
-    embed.addEventListener(EmbedConstructor.VIDEO_READY, () => {
-      const handler = onVideoReady ?? defaultProps.onVideoReady!;
-      return handler(embed);
-    });
+    embed.addEventListener(EmbedConstructor.AUTHENTICATE, onAuthenticate!);
+    embed.addEventListener(EmbedConstructor.VIDEO_PLAY, onVideoPlay!);
+    embed.addEventListener(EmbedConstructor.VIDEO_PAUSE, onVideoPause!);
+    embed.addEventListener(EmbedConstructor.VIDEO_READY, () => onVideoReady!(embed));
 
     return embed;
   }, [
@@ -159,8 +154,8 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = ({
     <div
       id={id}
       style={{
-        height: height ?? defaultProps.height,
-        width: width ?? defaultProps.width
+        height,
+        width
       }}
       {...props}
     />
