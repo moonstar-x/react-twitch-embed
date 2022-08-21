@@ -4,10 +4,6 @@ import TwitchEmbed, { TwitchEmbedProps } from './components/TwitchEmbed';
 import TwitchPlayer, { TwitchPlayerProps } from './components/TwitchPlayer';
 import TwitchPlayerNonInteractive, { TwitchPlayerNonInteractiveProps } from './components/TwitchPlayerNonInteractive';
 
-import useScript, { ScriptState } from './hooks/useScript';
-import usePrevious from './hooks/usePrevious';
-import useHostname from './hooks/useHostname';
-
 import {
   OnPlayData,
   OnSeekData,
@@ -35,11 +31,6 @@ export {
   TwitchPlayerProps,
   TwitchPlayerNonInteractive,
   TwitchPlayerNonInteractiveProps,
-
-  useScript,
-  ScriptState,
-  usePrevious,
-  useHostname,
 
   OnPlayData,
   OnSeekData,
