@@ -1,7 +1,7 @@
 {
   "name": "react-twitch-embed",
   "version": "3.0.0",
-  "description": "A Twitch player embed React component.",
+  "description": "A collection of components to embed Twitch.",
   "author": "moonstar-x",
   "license": "MIT",
   "main": "dist/index.js",
