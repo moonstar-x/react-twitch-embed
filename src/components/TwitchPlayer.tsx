@@ -184,6 +184,10 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
     }
   }, [channel, collection, createPlayer, error, loading, previousProps, props, video]);
 
+  if (loading) {
+    return null;
+  }
+
   return (
     <div
       id={id}
