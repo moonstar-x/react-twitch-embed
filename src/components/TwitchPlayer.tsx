@@ -33,8 +33,6 @@ export interface TwitchPlayerProps {
   width?: string | number
 }
 
-// TODO: Use Component.defaultProps instead of constant ??.
-
 const defaultProps: Partial<TwitchPlayerProps> = {
   autoplay: true,
   muted: false,
@@ -100,56 +98,26 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
       channel,
       video,
       collection,
-      autoplay: autoplay ?? defaultProps.autoplay,
-      muted: muted ?? defaultProps.muted,
-      time: time ?? defaultProps.time,
-      playsinline: playsInline ?? defaultProps.playsInline,
-      allowfullscreen: allowFullscreen ?? defaultProps.allowFullscreen,
-      controls: !hideControls ?? !defaultProps.hideControls,
+      autoplay,
+      muted,
+      time,
+      playsinline: playsInline,
+      allowfullscreen: allowFullscreen,
+      controls: !hideControls,
       height: '100%',
       width: '100%'
     });
 
-    player.addEventListener(Player.CAPTIONS, (captions: string) => {
-      const handler = onCaptions ?? defaultProps.onCaptions!;
-      return handler(player, captions);
-    });
-    player.addEventListener(Player.ENDED, () => {
-      const handler = onEnded ?? defaultProps.onEnded!;
-      return handler(player);
-    });
-    player.addEventListener(Player.PAUSE, () => {
-      const handler = onPause ?? defaultProps.onPause!;
-      return handler(player);
-    });
-    player.addEventListener(Player.PLAY, (data: OnPlayData) => {
-      const handler = onPlay ?? defaultProps.onPlay!;
-      return handler(player, data);
-    });
-    player.addEventListener(Player.PLAYBACK_BLOCKED, () => {
-      const handler = onPlaybackBlocked ?? defaultProps.onPlaybackBlocked!;
-      return handler(player);
-    });
-    player.addEventListener(Player.PLAYING, () => {
-      const handler = onPlaying ?? defaultProps.onPlaying!;
-      return handler(player);
-    });
-    player.addEventListener(Player.OFFLINE, () => {
-      const handler = onOffline ?? defaultProps.onOffline!;
-      return handler(player);
-    });
-    player.addEventListener(Player.ONLINE, () => {
-      const handler = onOnline ?? defaultProps.onOnline!;
-      return handler(player);
-    });
-    player.addEventListener(Player.READY, () => {
-      const handler = onReady ?? defaultProps.onReady!;
-      return handler(player);
-    });
-    player.addEventListener(Player.SEEK, (data: OnSeekData) => {
-      const handler = onSeek ?? defaultProps.onSeek!;
-      return handler(player, data);
-    });
+    player.addEventListener(Player.CAPTIONS, (captions: string) => onCaptions!(player, captions));
+    player.addEventListener(Player.ENDED, () => onEnded!(player));
+    player.addEventListener(Player.PAUSE, () => onPause!(player));
+    player.addEventListener(Player.PLAY, (data: OnPlayData) => onPlay!(player, data));
+    player.addEventListener(Player.PLAYBACK_BLOCKED, () => onPlaybackBlocked!(player));
+    player.addEventListener(Player.PLAYING, () => onPlaying!(player));
+    player.addEventListener(Player.OFFLINE, () => onOffline!(player));
+    player.addEventListener(Player.ONLINE, () => onOnline!(player));
+    player.addEventListener(Player.READY, () => onReady!(player));
+    player.addEventListener(Player.SEEK, (data: OnSeekData) => onSeek!(player, data));
 
     return player;
   }, [
@@ -226,8 +194,8 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = ({
     <div
       id={id}
       style={{
-        height: height ?? defaultProps.height,
-        width: width ?? defaultProps.width
+        height,
+        width
       }}
       {...props}
     />
