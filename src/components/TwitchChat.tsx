@@ -8,12 +8,17 @@ export interface TwitchChatProps extends React.HTMLAttributes<HTMLIFrameElement>
   darkMode?: boolean
   parent: string | string[]
 
+  title?: string
   height?: string | number
   width?: string | number
 }
 
-// TODO: Create defaultProps.
-// TODO: Use Component.defaultProps instead of constant ??.
+const defaultProps: Partial<TwitchChatProps> = {
+  darkMode: generateUrlDefaultOptions.darkMode,
+  title: 'TwitchChat',
+  height: DEFAULTS.CHAT.HEIGHT,
+  width: DEFAULTS.CHAT.WIDTH
+};
 
 const TwitchChat: React.FC<TwitchChatProps> = ({
   channel,
@@ -26,19 +31,21 @@ const TwitchChat: React.FC<TwitchChatProps> = ({
   ...props
 }) => {
   const chatUrl = generateUrl(channel, parent, {
-    darkMode: darkMode ?? generateUrlDefaultOptions.darkMode,
+    darkMode
   });
 
   return (
     <iframe
-      title={title ?? 'TwitchChat'}
-      height={height ?? DEFAULTS.CHAT.HEIGHT}
-      width={width ?? DEFAULTS.CHAT.WIDTH}
+      title={title}
+      height={height}
+      width={width}
       src={chatUrl}
       frameBorder={0}
       {...props}
     />
   );
 };
+
+TwitchChat.defaultProps = defaultProps;
 
 export default TwitchChat;
