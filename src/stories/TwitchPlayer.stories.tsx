@@ -1,11 +1,12 @@
 /* eslint-disable react/no-multi-comp */
-import React, { Fragment, useState } from 'react';
+import React from 'react';
 import { Story } from '@storybook/react';
 import TwitchPlayer, { TwitchPlayerProps } from '../components/TwitchPlayer';
 import { STORYBOOK_DEFAULTS } from '../constants';
-import { TwitchPlayerInstance } from '../types';
+import withNextMediaControls from './helpers/withNextMediaControls';
 
 // TODO: Add component controlled player.
+// TODO: Add stories for other media.
 
 export default {
   title: 'TwitchPlayer',
@@ -62,49 +63,4 @@ ChannelControlsHidden.args = {
   hideControls: true
 };
 
-export const ChannelSmoothSwitching = () => {
-  const channels = [STORYBOOK_DEFAULTS.channel, 'LCS', 'ibai'];
-  const [index, setIndex] = useState<number>(0);
-  const channel = channels[index];
-
-  const handlePrevious = () => {
-    setIndex((index - 1) % channels.length);
-  };
-
-  const handleNext = () => {
-    setIndex((index + 1) % channels.length);
-  };
-
-  const style = {
-    margin: '1rem',
-    fontSize: '1.3em'
-  };
-
-  return (
-    <Fragment>
-      <TwitchPlayer channel={channel} />
-      <div style={{ margin: '1rem 3rem' }}>
-        <button style={style} onClick={handlePrevious}>Previous</button>
-        <span style={style}>Current channel: {channel}</span>
-        <button style={style} onClick={handleNext}>Next</button>
-      </div>
-    </Fragment>
-  );
-};
-
-export const ChannelTest = () => {
-  const [data, setData] = useState<string>('');
-
-  const handlePlaying = (player: TwitchPlayerInstance) => {
-    setData(JSON.stringify(player.getQualities()));
-  };
-
-  return (
-    <Fragment>
-      <TwitchPlayer onPlaying={handlePlaying} channel="sandraskins" />
-      <div>
-        {data}
-      </div>
-    </Fragment>
-  );
-};
+export const ChannelSmoothSwitching = withNextMediaControls(TwitchPlayer, 'channel', STORYBOOK_DEFAULTS.channels);

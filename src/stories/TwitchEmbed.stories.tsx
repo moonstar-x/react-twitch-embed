@@ -1,10 +1,12 @@
 /* eslint-disable react/no-multi-comp */
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Story } from '@storybook/react';
 import TwitchEmbed, { TwitchEmbedProps } from '../components/TwitchEmbed';
 import { STORYBOOK_DEFAULTS } from '../constants';
+import withNextMediaControls from './helpers/withNextMediaControls';
 
 // TODO: Add component controlled player.
+// TODO: Add stories for other media.
 
 export default {
   title: 'TwitchEmbed',
@@ -86,32 +88,4 @@ export const MultipleEmbeds = () => {
   );
 };
 
-export const SmoothChannelSwitching = () => {
-  const channels = [STORYBOOK_DEFAULTS.channel, 'LCS', 'ibai'];
-  const [index, setIndex] = useState<number>(0);
-  const channel = channels[index];
-
-  const handlePrevious = () => {
-    setIndex((index - 1) % channels.length);
-  };
-
-  const handleNext = () => {
-    setIndex((index + 1) % channels.length);
-  };
-
-  const style = {
-    margin: '1rem',
-    fontSize: '1.3em'
-  };
-
-  return (
-    <Fragment>
-      <TwitchEmbed channel={channel} id="twitch-embed" />
-      <div style={{ margin: '1rem 3rem' }}>
-        <button style={style} onClick={handlePrevious}>Previous</button>
-        <span style={style}>Current channel: {channel}</span>
-        <button style={style} onClick={handleNext}>Next</button>
-      </div>
-    </Fragment>
-  );
-};
+export const ChannelSmoothSwitching = withNextMediaControls(TwitchEmbed, 'channel', STORYBOOK_DEFAULTS.channels);

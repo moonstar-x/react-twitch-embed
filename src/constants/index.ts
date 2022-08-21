@@ -19,6 +19,7 @@ export const DEFAULTS = {
 
 export const STORYBOOK_DEFAULTS = {
   channel: 'moonstar_x',
+  channels: ['moonstar_x', 'LCS', 'LLA', 'ibai'],
   clips: [
     'AdventurousBusyWormTwitchRaid-7vDEE8L5ur9j9dzi',
     'ColdbloodedSavagePterodactylTheTarFu-nB9EPedzd7eI1Rih'
