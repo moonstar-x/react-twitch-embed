@@ -2,11 +2,12 @@ import { Meta } from '@storybook/addon-docs';
 
 <Meta title="Home" />
 
-[![npm version](https://img.shields.io/npm/v/react-twitch-embed.svg)](https://www.npmjs.com/package/react-twitch-embed)
-[![npm downloads](https://badgen.net/npm/dt/react-twitch-embed)](https://www.npmjs.com/package/react-twitch-embed)
-[![bundle size](https://badgen.net/bundlephobia/minzip/react-twitch-embed)](https://bundlephobia.com/result?p=react-twitch-embed)
-[![github stars](https://badgen.net/github/stars/moonstar-x/react-twitch-embed)](https://github.com/moonstar-x/react-twitch-embed)
-[![github issues](https://badgen.net/github/issues/moonstar-x/react-twitch-embed)](https://github.com/moonstar-x/react-twitch-embed/issues)
+[![ci-build-status](https://img.shields.io/github/workflow/status/moonstar-x/react-twitch-embed/On%20Push%20%28Master%29?logo=github)](https://github.com/moonstar-x/react-twitch-embed)
+[![issues](https://img.shields.io/github/issues/moonstar-x/react-twitch-embed?logo=github)](https://github.com/moonstar-x/react-twitch-embed)
+[![bundle-size](https://img.shields.io/bundlephobia/min/react-twitch-embed)](https://www.npmjs.com/package/react-twitch-embed)
+[![version](https://img.shields.io/npm/v/react-twitch-embed?logo=npm)](https://www.npmjs.com/package/react-twitch-embed)
+[![downloads-week](https://img.shields.io/npm/dw/react-twitch-embed?logo=npm)](https://www.npmjs.com/package/react-twitch-embed)
+[![downloads-total](https://img.shields.io/npm/dt/react-twitch-embed?logo=npm)](https://www.npmjs.com/package/react-twitch-embed)
 
 # react-twitch-embed
 
@@ -20,7 +21,7 @@ alongside a description on all the supported props for each component.
 
 ## Installation
 
-```bash
+```text
 npm install react-twitch-embed
 ```
 
@@ -69,6 +70,34 @@ As such, you shouldn't need to specify this prop for any of the components, unle
 * **What does smooth switching mean?**
 > For the `TwitchEmbed` and `TwitchPlayer` components, when updating their `channel`, `video` and/or `collection` props,
 > the player will not be recreated and instead the internal API will be used to update this data.
+
+## Testing
+
+You can run the tests for this package by running:
+
+```text
+npm test
+```
+
+Or leave the watcher running with:
+
+```text
+npm run test:watch
+```
+
+## Developing
+
+When developing, you can use Storybook as a way to check the components and test them. You can run the Storybook server with:
+
+```text
+npm run storybook:serve
+```
+
+Also, make sure that your code is linter properly with:
+
+```text
+npm run lint
+```
 
 ## Author
 
