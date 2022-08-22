@@ -13,7 +13,6 @@
     "allowJs": false,
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
     "outDir": "dist",
     "resolveJsonModule": true,
 
