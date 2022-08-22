@@ -1,4 +1,12 @@
 {
+  "include": ["src/**/*"],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "src/**/*.spec.*",
+    "src/stories"
+  ],
+
   "compilerOptions": {
     "target": "es2016",
     "module": "es6",
@@ -6,7 +14,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "dist",
     "resolveJsonModule": true,
 
     "strict": true,
@@ -24,6 +32,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
 
+    "emitDeclarationOnly": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
