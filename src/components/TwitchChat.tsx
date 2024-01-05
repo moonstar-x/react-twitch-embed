@@ -13,21 +13,14 @@ export interface TwitchChatProps extends React.HTMLAttributes<HTMLIFrameElement>
   width?: string | number
 }
 
-const defaultProps: Partial<TwitchChatProps> = {
-  darkMode: DEFAULTS.DARK_MODE,
-  title: DEFAULTS.TITLE.TWITCH_CHAT,
-  height: DEFAULTS.CHAT.HEIGHT,
-  width: DEFAULTS.CHAT.WIDTH
-};
-
 const TwitchChat: React.FC<TwitchChatProps> = ({
   channel,
   parent,
-  darkMode,
+  darkMode = DEFAULTS.DARK_MODE,
 
-  title,
-  height,
-  width,
+  title = DEFAULTS.TITLE.TWITCH_CHAT,
+  height = DEFAULTS.CHAT.HEIGHT,
+  width = DEFAULTS.CHAT.WIDTH,
   ...props
 }) => {
   const hostname = useHostname();
@@ -51,7 +44,5 @@ const TwitchChat: React.FC<TwitchChatProps> = ({
     />
   );
 };
-
-TwitchChat.defaultProps = defaultProps;
 
 export default TwitchChat;
