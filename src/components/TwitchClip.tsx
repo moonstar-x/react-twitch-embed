@@ -14,23 +14,15 @@ export interface TwitchClipProps extends React.HTMLAttributes<HTMLIFrameElement>
   width?: string | number
 }
 
-const defaultProps: Partial<TwitchClipProps> = {
-  autoplay: DEFAULTS.AUTOPLAY,
-  muted: DEFAULTS.MUTED,
-  title: DEFAULTS.TITLE.TWITCH_CLIP,
-  height: DEFAULTS.MEDIA.HEIGHT,
-  width: DEFAULTS.MEDIA.WIDTH
-};
-
 const TwitchClip: React.FC<TwitchClipProps> = ({
   clip,
   parent,
-  autoplay,
-  muted,
+  autoplay = DEFAULTS.AUTOPLAY,
+  muted = DEFAULTS.MUTED,
 
-  title,
-  height,
-  width,
+  title = DEFAULTS.TITLE.TWITCH_CLIP,
+  height = DEFAULTS.MEDIA.HEIGHT,
+  width = DEFAULTS.MEDIA.WIDTH,
   ...props
 }) => {
   const hostname = useHostname();
@@ -55,7 +47,5 @@ const TwitchClip: React.FC<TwitchClipProps> = ({
     />
   );
 };
-
-TwitchClip.defaultProps = defaultProps;
 
 export default TwitchClip;

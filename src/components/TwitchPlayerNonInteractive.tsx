@@ -17,27 +17,18 @@ export interface TwitchPlayerNonInteractiveProps extends React.HTMLAttributes<HT
   width?: string | number
 }
 
-const defaultProps: Partial<TwitchPlayerNonInteractiveProps> = {
-  autoplay: DEFAULTS.AUTOPLAY,
-  muted: DEFAULTS.MUTED,
-  time: DEFAULTS.TIME,
-  title: DEFAULTS.TITLE.TWITCH_PLAYER_NON_INTERACTIVE,
-  height: DEFAULTS.MEDIA.HEIGHT,
-  width: DEFAULTS.MEDIA.WIDTH
-};
-
 const TwitchPlayerNonInteractive: React.FC<TwitchPlayerNonInteractiveProps> = ({
   parent,
   channel,
   video,
   collection,
-  autoplay,
-  muted,
-  time,
+  autoplay = DEFAULTS.AUTOPLAY,
+  muted = DEFAULTS.MUTED,
+  time = DEFAULTS.TIME,
 
-  title,
-  height,
-  width,
+  title = DEFAULTS.TITLE.TWITCH_PLAYER_NON_INTERACTIVE,
+  height = DEFAULTS.MEDIA.HEIGHT,
+  width = DEFAULTS.MEDIA.WIDTH,
   ...props
 }) => {
   const hostname = useHostname();
@@ -67,7 +58,5 @@ const TwitchPlayerNonInteractive: React.FC<TwitchPlayerNonInteractiveProps> = ({
     />
   );
 };
-
-TwitchPlayerNonInteractive.defaultProps = defaultProps;
 
 export default TwitchPlayerNonInteractive;

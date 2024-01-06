@@ -35,28 +35,6 @@ export interface TwitchPlayerProps extends Omit<React.HTMLAttributes<HTMLDivElem
   width?: string | number
 }
 
-const defaultProps: Partial<TwitchPlayerProps> = {
-  autoplay: DEFAULTS.AUTOPLAY,
-  muted: DEFAULTS.MUTED,
-  time: DEFAULTS.TIME,
-  allowFullscreen: DEFAULTS.ALLOW_FULLSCREEN,
-  playsInline: DEFAULTS.INLINE,
-  hideControls: DEFAULTS.HIDE_CONTROLS,
-  onCaptions: typedNoop2<TwitchPlayerInstance, string>(),
-  onEnded: typedNoop<TwitchPlayerInstance>(),
-  onPause: typedNoop<TwitchPlayerInstance>(),
-  onPlay: typedNoop2<TwitchPlayerInstance, OnPlayData>(),
-  onPlaybackBlocked: typedNoop<TwitchPlayerInstance>(),
-  onPlaying: typedNoop<TwitchPlayerInstance>(),
-  onOffline: typedNoop<TwitchPlayerInstance>(),
-  onOnline: typedNoop<TwitchPlayerInstance>(),
-  onReady: typedNoop<TwitchPlayerInstance>(),
-  onSeek: typedNoop2<TwitchPlayerInstance, OnSeekData>(),
-  id: DEFAULTS.ID.TWITCH_PLAYER,
-  height: DEFAULTS.MEDIA.HEIGHT,
-  width: DEFAULTS.MEDIA.WIDTH
-};
-
 const nonReconstructTriggeringProps: (keyof TwitchPlayerProps)[] = ['channel', 'video', 'collection', 'height', 'width'];
 const shouldReconstructPlayer = (previousProps: TwitchPlayerProps | undefined, props: TwitchPlayerProps): boolean => {
   return objectCompareWithIgnoredKeys(
@@ -72,27 +50,27 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
     video,
     collection,
     parent,
-    autoplay,
-    muted,
-    time,
-    allowFullscreen,
-    playsInline,
-    hideControls,
+    autoplay = DEFAULTS.AUTOPLAY,
+    muted = DEFAULTS.MUTED,
+    time = DEFAULTS.TIME,
+    allowFullscreen = DEFAULTS.ALLOW_FULLSCREEN,
+    playsInline = DEFAULTS.INLINE,
+    hideControls = DEFAULTS.HIDE_CONTROLS,
 
-    onCaptions,
-    onEnded,
-    onPause,
-    onPlay,
-    onPlaybackBlocked,
-    onPlaying,
-    onOffline,
-    onOnline,
-    onReady,
-    onSeek,
+    onCaptions = typedNoop2<TwitchPlayerInstance, string>(),
+    onEnded = typedNoop<TwitchPlayerInstance>(),
+    onPause = typedNoop<TwitchPlayerInstance>(),
+    onPlay = typedNoop2<TwitchPlayerInstance, OnPlayData>(),
+    onPlaybackBlocked = typedNoop<TwitchPlayerInstance>(),
+    onPlaying = typedNoop<TwitchPlayerInstance>(),
+    onOffline = typedNoop<TwitchPlayerInstance>(),
+    onOnline = typedNoop<TwitchPlayerInstance>(),
+    onReady = typedNoop<TwitchPlayerInstance>(),
+    onSeek = typedNoop2<TwitchPlayerInstance, OnSeekData>(),
 
-    id,
-    height,
-    width,
+    id = DEFAULTS.ID.TWITCH_PLAYER,
+    height = DEFAULTS.MEDIA.HEIGHT,
+    width = DEFAULTS.MEDIA.WIDTH,
     ...restOfProps
   } = props;
 
@@ -197,7 +175,5 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
     />
   );
 };
-
-TwitchPlayer.defaultProps = defaultProps;
 
 export default TwitchPlayer;

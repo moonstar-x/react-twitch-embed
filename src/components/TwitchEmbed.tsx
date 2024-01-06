@@ -30,23 +30,6 @@ export interface TwitchEmbedProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string | number
 }
 
-const defaultProps: Partial<TwitchEmbedProps> = {
-  allowFullscreen: DEFAULTS.ALLOW_FULLSCREEN,
-  autoplay: DEFAULTS.AUTOPLAY,
-  withChat: DEFAULTS.WITH_CHAT,
-  muted: DEFAULTS.MUTED,
-  darkMode: DEFAULTS.DARK_MODE,
-  time: DEFAULTS.TIME,
-  hideControls: DEFAULTS.HIDE_CONTROLS,
-  onAuthenticate: typedNoop2<TwitchEmbedInstance, OnAuthenticateData>(),
-  onVideoPlay: typedNoop2<TwitchEmbedInstance, OnPlayData>(),
-  onVideoPause: typedNoop<TwitchEmbedInstance>(),
-  onVideoReady: typedNoop<TwitchEmbedInstance>(),
-  id: DEFAULTS.ID.TWITCH_EMBED,
-  height: DEFAULTS.MEDIA.HEIGHT,
-  width: DEFAULTS.MEDIA.WIDTH
-};
-
 const nonReconstructTriggeringProps: (keyof TwitchEmbedProps)[] = ['channel', 'video', 'collection', 'height', 'width'];
 const shouldReconstructEmbed = (previousProps: TwitchEmbedProps | undefined, props: TwitchEmbedProps): boolean => {
   return objectCompareWithIgnoredKeys(
@@ -58,26 +41,26 @@ const shouldReconstructEmbed = (previousProps: TwitchEmbedProps | undefined, pro
 
 const TwitchEmbed: React.FC<TwitchEmbedProps> = (props) => {
   const {
-    allowFullscreen,
-    autoplay,
+    allowFullscreen = DEFAULTS.ALLOW_FULLSCREEN,
+    autoplay = DEFAULTS.AUTOPLAY,
     channel,
     video,
     collection,
-    withChat,
-    muted,
+    withChat = DEFAULTS.WITH_CHAT,
+    muted = DEFAULTS.MUTED,
     parent,
-    darkMode,
-    time,
-    hideControls,
+    darkMode = DEFAULTS.DARK_MODE,
+    time = DEFAULTS.TIME,
+    hideControls = DEFAULTS.HIDE_CONTROLS,
 
-    onAuthenticate,
-    onVideoPlay,
-    onVideoPause,
-    onVideoReady,
+    onAuthenticate = typedNoop2<TwitchEmbedInstance, OnAuthenticateData>(),
+    onVideoPlay = typedNoop2<TwitchEmbedInstance, OnPlayData>(),
+    onVideoPause = typedNoop<TwitchEmbedInstance>(),
+    onVideoReady = typedNoop<TwitchEmbedInstance>(),
 
-    id,
-    height,
-    width,
+    id = DEFAULTS.ID.TWITCH_EMBED,
+    height = DEFAULTS.MEDIA.HEIGHT,
+    width = DEFAULTS.MEDIA.WIDTH,
     ...restOfProps
   } = props;
 
@@ -172,7 +155,5 @@ const TwitchEmbed: React.FC<TwitchEmbedProps> = (props) => {
     />
   );
 };
-
-TwitchEmbed.defaultProps = defaultProps;
 
 export default TwitchEmbed;
